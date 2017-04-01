@@ -5,8 +5,8 @@ public class Helmet extends Accessory{
 	private String material;
 	private int size;
 	
-	public Helmet(String name, double price, double weight, double width, double height, String material, int size) {
-		super(name, price, weight, width, height);
+	public Helmet(double price, double weight, double width, double height, String type, String material, int size) {
+		super(price, weight, width, height, type);
 		this.material = material;
 		this.size = size;
 	}

@@ -2,28 +2,18 @@ package by.htp.rental.entity;
 
 public class Bycicle extends MainEquipment{
 	
-	private String type; // for child or for adult 
 	private int countSpeedMode;
-	
+
+	public Bycicle(double price, double weight, double width, double height, String type, int countSpeedMode) {
+		super(price, weight, width, height, type);
+		this.countSpeedMode = countSpeedMode;
+	}
+
 	public int getCountSpeedMode() {
 		return countSpeedMode;
 	}
 
 	public void setCountSpeedMode(int countSpeedMode) {
 		this.countSpeedMode = countSpeedMode;
-	}
-
-	public Bycicle(String name, double price, double weight, double width, double height, String type, int countSpeedMode) {
-		super(name, price, weight, width, height);
-		this.type = type;
-		this.countSpeedMode = countSpeedMode;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 }
