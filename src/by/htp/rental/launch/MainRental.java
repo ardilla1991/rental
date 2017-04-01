@@ -5,6 +5,7 @@ import by.htp.rental.entity.Equipment;
 import by.htp.rental.entity.Helmet;
 import by.htp.rental.entity.RentStation;
 import by.htp.rental.entity.Skate;
+import by.htp.rental.writer.Printer;
 
 public class MainRental {
 
@@ -23,8 +24,15 @@ public class MainRental {
 		rentStation.addEquipment(mainEq4);
 		rentStation.addEquipment(mainEq5);
 		
-		System.out.println("All Equipments");
-		System.out.println(rentStation);
+		Printer print = new Printer();
+		
+		print.printRes("All Equipments", rentStation);
+		
+		Equipment[] eqSpare = rentStation.getSpareEquipments();
+		print.printRes("All spare equipments:", eqSpare);
+		
+		Equipment[] eqEngaged = rentStation.getEngagedEquipments();
+		print.printRes("All ngaged equipments:", eqEngaged);
 	}
 
 }

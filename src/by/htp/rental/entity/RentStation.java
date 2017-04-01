@@ -2,7 +2,9 @@ package by.htp.rental.entity;
 
 import java.util.Arrays;
 
-public class RentStation {
+import by.htp.rental.interf.IRentStation;
+
+public class RentStation implements IRentStation{
 
 	public Equipment[] equipments = new Equipment[5];
 	
@@ -50,4 +52,36 @@ public class RentStation {
 	public String toString() {
 		return "RentStation [equipments=" + Arrays.toString(equipments) + "]";
 	}
+	
+	public Equipment[] getSpareEquipments() {
+		
+		Equipment[] eq = equipments;
+		int counter = 0;
+		for ( int i = 0; i < getEquipmentsArraySize(); i++ ) {
+			if ( equipments[i].getSpare() ) {
+				eq[counter] = equipments[i];
+				counter++;
+			}	
+		}
+		Equipment[] newEq = new Equipment[counter];
+		System.arraycopy(eq, 0, newEq, 0, counter);
+		
+		return newEq;
+	}
+	
+	public Equipment[] getEngagedEquipments() {
+		Equipment[] eq = equipments;
+		int counter = 0;
+		for ( int i = 0; i < getEquipmentsArraySize(); i++ ) {
+			if ( !equipments[i].getSpare() ) {
+				eq[counter] = equipments[i];
+				counter++;
+			}	
+		}
+		Equipment[] newEq = new Equipment[counter];
+		System.arraycopy(eq, 0, newEq, 0, counter);
+		
+		return newEq;
+	}
+
 }
