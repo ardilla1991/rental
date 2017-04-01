@@ -62,6 +62,12 @@ public abstract class Equipment {
 		return spare;
 	}
 
+	@Override
+	public String toString() {
+		return "Equipment [price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
+				+ ", spare=" + spare + ", type=" + type + "]\n";
+	}
+
 	public void setSpare(boolean spare) {
 		this.spare = spare;
 	}
