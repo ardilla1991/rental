@@ -7,23 +7,15 @@ public abstract class Equipment {
 	private double width;
 	private double height;
 	private boolean spare; // is spare for rental (true or false)
-	private String type; // for child or for adult 
+	private CategoryEq category; // for child or for adult 
 	
-	public Equipment(double price, double weight, double width, double height, String type) {
+	public Equipment(double price, double weight, double width, double height, CategoryEq category) {
 		this.price = price;
 		this.weight = weight;
 		this.width = width;
 		this.height = height;
-		this.type = type;
+		this.category = category;
 		setSpare(true);
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public double getPrice() {
@@ -65,7 +57,7 @@ public abstract class Equipment {
 	@Override
 	public String toString() {
 		return "Equipment [price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
-				+ ", spare=" + spare + ", type=" + type + "]\n";
+				+ ", spare=" + spare + ", category=" + category + "]\n";
 	}
 
 	public void setSpare(boolean spare) {

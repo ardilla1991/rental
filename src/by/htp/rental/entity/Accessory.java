@@ -1,8 +1,8 @@
 package by.htp.rental.entity;
 
-public class Accessory extends Equipment{
+public abstract class Accessory extends Equipment{
 
-	public Accessory(double price, double weight, double width, double height, String type) {
-		super(price, weight, width, height, type);
+	public Accessory(double price, double weight, double width, double height, CategoryEq category) {
+		super(price, weight, width, height, category);
 	}
 }

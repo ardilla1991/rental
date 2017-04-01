@@ -1,23 +1,23 @@
 package by.htp.rental.entity;
 
-public class Helmet extends Accessory{
+final public class Helmet extends Accessory{
 	
-	private String material;
+	private MaterialType material;
 	private int size;
 	
-	public Helmet(double price, double weight, double width, double height, String type, String material, int size) {
-		super(price, weight, width, height, type);
+	public Helmet(double price, double weight, double width, double height, CategoryEq category, MaterialType material, int size) {
+		super(price, weight, width, height, category);
 		this.material = material;
 		this.size = size;
 	}
 
-	public String getMaterial() {
+	/*public MaterialType getMaterial() {
 		return material;
 	}
 
-	public void setMaterial(String material) {
+	public void setMaterial(MaterialType material) {
 		this.material = material;
-	}
+	}*/
 
 	public int getSize() {
 		return size;
@@ -26,5 +26,12 @@ public class Helmet extends Accessory{
 	public void setSize(int size) {
 		this.size = size;
 	}
+
+	@Override
+	public String toString() {
+		return "Helmet [material=" + material + ", size=" + size + "]";
+	}
+	
+	
 
 }
