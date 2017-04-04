@@ -12,7 +12,7 @@ public class RentStation implements IRentStation{
 		equipments = addEquipmentRecord(equipments, equipment);
 	}
 	
-	public Equipment[] addEquipmentRecord(Equipment[] equipments, Equipment stone) {
+	public Equipment[] addEquipmentRecord(Equipment[] equipments, Equipment equipment) {
 		int emptyIndex = -1;
 		while ( (emptyIndex = getEmptyEquipmentIndex()) == -1 ) {
 			Equipment[] serv = new Equipment[equipments.length + 5];
@@ -21,7 +21,7 @@ public class RentStation implements IRentStation{
 			}
 			equipments = serv;
 		}
-		equipments[emptyIndex] = stone;
+		equipments[emptyIndex] = equipment;
 		
 		return equipments;
 	}

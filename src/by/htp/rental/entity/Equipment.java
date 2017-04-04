@@ -1,5 +1,7 @@
 package by.htp.rental.entity;
 
+import java.util.Date;
+
 public abstract class Equipment {
 	
 	private double price;
@@ -8,7 +10,17 @@ public abstract class Equipment {
 	private double height;
 	private boolean spare; // is spare for rental (true or false)
 	private CategoryEq category; // for child or for adult 
-	
+	private Date lastRentDate;
+	private int lastRentPeriod;
+
+	public int getLastRentPeriod() {
+		return lastRentPeriod;
+	}
+
+	public void setLastRentPeriod(int lastRentPeriod) {
+		this.lastRentPeriod = lastRentPeriod;
+	}
+
 	public Equipment(double price, double weight, double width, double height, CategoryEq category) {
 		this.price = price;
 		this.weight = weight;
@@ -62,5 +74,13 @@ public abstract class Equipment {
 
 	public void setSpare(boolean spare) {
 		this.spare = spare;
+	}
+	
+	public Date getLastRentDate() {
+		return lastRentDate;
+	}
+
+	public void setLastRentDate(Date lastRentDate) {
+		this.lastRentDate = lastRentDate;
 	}
 }
