@@ -18,7 +18,6 @@ public class RentalManager {
 			equipment.setLastRentDate(new Date());
 			equipment.setLastRentPeriod(period);
 			rentUnit.addEquipment(person, equipment);
-			equipment.setSpare(false);
 			return true;
 		}
 		return false;
@@ -26,7 +25,8 @@ public class RentalManager {
 	
 	private boolean isEquipmentSpare(Equipment equipment) {
 
-		return equipment.getSpare();
+		//return equipment.getSpare();
+		return true;
 	}
 	
 	private boolean isExceededNumberOfEquipmentForUser(Person person) {

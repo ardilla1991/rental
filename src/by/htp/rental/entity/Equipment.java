@@ -8,7 +8,6 @@ public abstract class Equipment {
 	private double weight;
 	private double width;
 	private double height;
-	private boolean spare; // is spare for rental (true or false)
 	private CategoryEq category; // for child or for adult 
 	private Date lastRentDate;
 	private int lastRentPeriod;
@@ -27,7 +26,6 @@ public abstract class Equipment {
 		this.width = width;
 		this.height = height;
 		this.category = category;
-		setSpare(true);
 	}
 
 	public double getPrice() {
@@ -61,19 +59,11 @@ public abstract class Equipment {
 	public void setHeight(double height) {
 		this.height = height;
 	}
-	
-	public boolean getSpare() {
-		return spare;
-	}
 
 	@Override
 	public String toString() {
 		return "Equipment [price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
-				+ ", spare=" + spare + ", category=" + category + "]\n";
-	}
-
-	public void setSpare(boolean spare) {
-		this.spare = spare;
+				+ ", category=" + category + "]\n";
 	}
 	
 	public Date getLastRentDate() {

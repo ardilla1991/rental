@@ -1,15 +1,11 @@
 package by.htp.rental.launch;
 
-import by.htp.rental.entity.CategoryEq;
-import by.htp.rental.entity.MaterialType;
-import by.htp.rental.entity.Person;
 import by.htp.rental.entity.Bycicle;
+import by.htp.rental.entity.CategoryEq;
 import by.htp.rental.entity.Equipment;
 import by.htp.rental.entity.Helmet;
-import by.htp.rental.entity.RentStation;
-import by.htp.rental.entity.RentalManager;
+import by.htp.rental.entity.MaterialType;
 import by.htp.rental.entity.Skate;
-import by.htp.rental.writer.Printer;
 
 public class MainRental {
 
@@ -22,7 +18,7 @@ public class MainRental {
 		Equipment mainEq5 = new Helmet(34, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
 		//Equipment mainEq6 = new Helmet(34, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
 		
-		RentStation rentStation = new RentStation();
+		/*RentStation rentStation = new RentStation();
 		rentStation.addEquipment(mainEq1);
 		rentStation.addEquipment(mainEq3);
 		rentStation.addEquipment(mainEq2);
@@ -32,22 +28,22 @@ public class MainRental {
 		
 		Printer print = new Printer();
 		
-		print.printRes("All Equipments", rentStation);
+		print.printRes("All Equipments", rentStation);*/
 		
 		
-		System.out.println(rentStation);
+		/*System.out.println(rentStation);*/
 		
 		
-		Equipment[] eqSpare = rentStation.getSpareEquipments();
-		print.printRes("All spare equipments:", eqSpare);
+		/*Equipment[] eqSpare = rentStation.getSpareEquipments();
+		print.printRes("All spare equipments:", eqSpare);*/
 		
-		Equipment[] eqEngaged = rentStation.getEngagedEquipments();
-		print.printRes("All engaged equipments:", eqEngaged);
+		/*Equipment[] eqEngaged = rentStation.getEngagedEquipments();
+		print.printRes("All engaged equipments:", eqEngaged);*/
 		
-		Person person1 = new Person("Ivan", "Ivanov", "12345678");
+		/*Person person1 = new Person("Ivan", "Ivanov", "12345678");*/
 		
 		/*  Create order  */
-		RentalManager rentalManager = new RentalManager(rentStation);
+		/*RentalManager rentalManager = new RentalManager(rentStation);
 		boolean resOfRent1 = rentalManager.rent(person1, mainEq1, 24 * 10 * 60 * 60);
 		if ( resOfRent1 ) {
 			print.printRes("Equipment was added", new Equipment[0]);
@@ -61,7 +57,7 @@ public class MainRental {
 		Equipment[] eqEngaged1 = rentStation.getEngagedEquipments();
 		print.printRes("All engaged equipments:", eqEngaged1);
 		
-		
+		*/
 	}
 
 }

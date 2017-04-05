@@ -9,7 +9,7 @@ public class Printer {
 		System.out.println(str);
 		for ( int i = 0; i < eq.length; i++ ) {
 			System.out.println("Equipment" + i + ": obj: " + eq[i].getClass() 
-			+ "; price: " + eq[i].getPrice() + "; spare: " + eq[i].getSpare()); 
+			+ "; price: " + eq[i].getPrice() + "; spare: "); 
 		}
 	}
 	

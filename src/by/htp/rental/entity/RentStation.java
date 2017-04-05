@@ -7,9 +7,12 @@ import by.htp.rental.interf.IRentStation;
 public class RentStation implements IRentStation{
 
 	public Equipment[] equipments = new Equipment[5];
+	public Equipment[] spareEquipments = new Equipment[5];
+	public Equipment[] engagedEquipments = new Equipment[5];
 	
 	public void addEquipment(Equipment equipment) {
 		equipments = addEquipmentRecord(equipments, equipment);
+		spareEquipments = addEquipmentRecord(spareEquipments, equipment);
 	}
 	
 	public Equipment[] addEquipmentRecord(Equipment[] equipments, Equipment equipment) {
@@ -54,34 +57,20 @@ public class RentStation implements IRentStation{
 	}
 	
 	public Equipment[] getSpareEquipments() {
-		
-		Equipment[] eq = equipments;
-		int counter = 0;
-		for ( int i = 0; i < getEquipmentsArraySize(); i++ ) {
-			if ( equipments[i].getSpare() ) {
-				eq[counter] = equipments[i];
-				counter++;
-			}	
-		}
-		Equipment[] newEq = new Equipment[counter];
-		System.arraycopy(eq, 0, newEq, 0, counter);
-		
-		return newEq;
+		return spareEquipments;
 	}
 	
 	public Equipment[] getEngagedEquipments() {
-		Equipment[] eq = equipments;
-		int counter = 0;
-		for ( int i = 0; i < getEquipmentsArraySize(); i++ ) {
-			if ( !equipments[i].getSpare() ) {
-				eq[counter] = equipments[i];
-				counter++;
-			}	
+		return engagedEquipments;
+	}
+	
+	public Equipment[] getEquipments() {
+		Equipment[] eq = new Equipment[getEquipmentsArraySize()];
+		for ( int i = 0; i < equipments.length; i++ ) {
+			eq[i] = equipments[i];
 		}
-		Equipment[] newEq = new Equipment[counter];
-		System.arraycopy(eq, 0, newEq, 0, counter);
 		
-		return newEq;
+		return eq;
 	}
 
 }
