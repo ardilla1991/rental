@@ -76,11 +76,4 @@ public abstract class Equipment {
 				+ ", category=" + category + "]\n";
 	}
 	
-	public Date getLastRentDate() {
-		return lastRentDate;
-	}
-
-	public void setLastRentDate(Date lastRentDate) {
-		this.lastRentDate = lastRentDate;
-	}
 }

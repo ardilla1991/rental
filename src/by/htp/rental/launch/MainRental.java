@@ -5,6 +5,8 @@ import by.htp.rental.entity.CategoryEq;
 import by.htp.rental.entity.Equipment;
 import by.htp.rental.entity.Helmet;
 import by.htp.rental.entity.MaterialType;
+import by.htp.rental.entity.Order;
+import by.htp.rental.entity.OrderDB;
 import by.htp.rental.entity.Person;
 import by.htp.rental.entity.RentStation;
 import by.htp.rental.entity.RentalManager;
@@ -44,10 +46,19 @@ public class MainRental {
 		
 		Person person1 = new Person("Ivan", "Ivanov", "12345678");
 		
-		/*  Create order  */
-		RentalManager rentalManager = new RentalManager(rentStation);
-		boolean resOfRent1 = rentalManager.rent(person1, mainEq1, 24 * 10 * 60 * 60);
-		if ( resOfRent1 ) {
+		/*  Create order for person */
+		Order order1 = new Order();
+		order1.createOrder(person1, mainEq1, 24);
+		//order1.createOrder(person1, mainEq2.getId());
+		
+		OrderDB orderDB = new OrderDB();
+		RentalManager rentalManager = new RentalManager(rentStation, orderDB);
+		boolean resRent1 = rentalManager.rent(order1);
+		
+		
+		System.out.print(orderDB);
+
+		if ( resRent1 ) {
 			print.printRes("Equipment was added", new Equipment[0]);
 		} else {
 			print.printRes("Equipment wasn't added", new Equipment[0]);
