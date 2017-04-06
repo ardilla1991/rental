@@ -17,4 +17,11 @@ public class Printer {
 		System.out.println(str);
 		System.out.println(rentSt);
 	}
+	
+	public void printRes(String str, int[] eq) {
+		System.out.println(str);
+		for ( int i = 0; i < eq.length; i++ ) {
+			System.out.println("Equipment" + i + ": obj: " + eq[i]); 
+		}
+	}
 }

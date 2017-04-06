@@ -4,6 +4,7 @@ import java.util.Date;
 
 public abstract class Equipment {
 	
+	private int id;
 	private double price;
 	private double weight;
 	private double width;
@@ -12,20 +13,29 @@ public abstract class Equipment {
 	private Date lastRentDate;
 	private int lastRentPeriod;
 
+	public Equipment(int id, double price, double weight, double width, double height, CategoryEq category) {
+		this.id = id;
+		this.price = price;
+		this.weight = weight;
+		this.width = width;
+		this.height = height;
+		this.category = category;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public int getLastRentPeriod() {
 		return lastRentPeriod;
 	}
 
 	public void setLastRentPeriod(int lastRentPeriod) {
 		this.lastRentPeriod = lastRentPeriod;
-	}
-
-	public Equipment(double price, double weight, double width, double height, CategoryEq category) {
-		this.price = price;
-		this.weight = weight;
-		this.width = width;
-		this.height = height;
-		this.category = category;
 	}
 
 	public double getPrice() {

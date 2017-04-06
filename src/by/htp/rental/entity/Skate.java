@@ -4,8 +4,8 @@ final public class Skate extends MainEquipment{
 	
 	public int size;
 	
-	public Skate(double price, double weight, double width, double heigh, CategoryEq category, int size) {
-		super(price, weight, width, heigh, category);
+	public Skate(int id, double price, double weight, double width, double heigh, CategoryEq category, int size) {
+		super(id, price, weight, width, heigh, category);
 		this.size = size;
 	}
 }

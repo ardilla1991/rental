@@ -4,8 +4,8 @@ final public class Bycicle extends MainEquipment{
 	
 	private int countSpeedMode;
 
-	public Bycicle(double price, double weight, double width, double height, CategoryEq category, int countSpeedMode) {
-		super(price, weight, width, height, category);
+	public Bycicle(int id, double price, double weight, double width, double height, CategoryEq category, int countSpeedMode) {
+		super(id, price, weight, width, height, category);
 		this.countSpeedMode = countSpeedMode;
 	}
 
