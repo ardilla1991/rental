@@ -1,7 +1,5 @@
 package by.htp.rental.entity;
 
-import java.util.Date;
-
 public abstract class Equipment {
 	
 	private int id;
@@ -10,8 +8,6 @@ public abstract class Equipment {
 	private double width;
 	private double height;
 	private CategoryEq category; // for child or for adult 
-	private Date lastRentDate;
-	private int lastRentPeriod;
 
 	public Equipment(int id, double price, double weight, double width, double height, CategoryEq category) {
 		this.id = id;
@@ -28,14 +24,6 @@ public abstract class Equipment {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public int getLastRentPeriod() {
-		return lastRentPeriod;
-	}
-
-	public void setLastRentPeriod(int lastRentPeriod) {
-		this.lastRentPeriod = lastRentPeriod;
 	}
 
 	public double getPrice() {

@@ -4,36 +4,36 @@ import java.util.HashMap;
 
 public class OrderDB {
 	
-	HashMap <Integer, int[]> units = new HashMap<>();
+	private HashMap <Integer, Order[]> units = new HashMap<>();
 
 	public void addOrder(Order newOrder) {
 		//[person.hashCode()] = addUnitsRecord(units[person.hashCode()], equipment);
 		if ( units.containsKey(newOrder.getPerson().hashCode()) && units.get(newOrder.getPerson().hashCode()).length > 0  ) {
-			units.put(newOrder.getPerson().hashCode(), addUnitsRecord(units.get(newOrder.getPerson().hashCode()), newOrder.getEquipmentId()));
+			units.put(newOrder.getPerson().hashCode(), addUnitsRecord(units.get(newOrder.getPerson().hashCode()), newOrder));
 		} else {
-			int[] eq = new int[3];
-			units.put(newOrder.getPerson().hashCode(), addUnitsRecord(eq, newOrder.getEquipmentId()));
+			Order[] eq = new Order[3];
+			units.put(newOrder.getPerson().hashCode(), addUnitsRecord(eq, newOrder));
 		}
 	}
 	
-	public int[] addUnitsRecord(int[] units, int equipment_id) {
+	public Order[] addUnitsRecord(Order[] units, Order order) {
 		int emptyIndex = -1;
 		System.out.println(units);
-		while ( (emptyIndex = getEmptyEquipmentIndex(units)) == -1 ) {
-			int[] serv = new int[units.length + 5];
+		while ( (emptyIndex = getEmptyOrderIndex(units)) == -1 ) {
+			Order[] serv = new Order[units.length + 5];
 			for (int i = 0; i < units.length; i++){
 				serv[i] = units[i];
 			}
 			units = serv;
 		}
-		units[emptyIndex] = equipment_id;
+		units[emptyIndex] = order;
 		
 		return units;
 	}
 	
-	private int getEmptyEquipmentIndex(int[] units) {
+	private int getEmptyOrderIndex(Order[] units) {
 		for ( int i = 0; i < units.length; i++ ) {
-			if ( units[i] == 0 ) {
+			if ( units[i] == null ) {
 				return i;
 			}
 		}
@@ -41,34 +41,52 @@ public class OrderDB {
 		return -1;
 	}
 	
-	/*public int getEquipmentsArraySize() {
-		for ( int i = 0; i < units.length; i++ ) {
-			if ( units[i] == null) {
+	public int getOrdersArraySize(Order[] orders) {
+		for ( int i = 0; i < orders.length; i++ ) {
+			if ( orders[i] == null) {
 				return i;
-			} else if ( i == units.length - 1 ) { // if the last element is full
+			} else if ( i == orders.length - 1 ) { // if the last element is full
 				return i + 1;
 			}
 		}
 		
 		return 0;
-	}*/
+	}
 
-	public HashMap<Integer, int[]> getUnits() {
+	public HashMap<Integer, Order[]> getUnits() {
 		return units;
 	}
 	
-	public int[] getEquipmentsOfPerson(Person person) {
+	public Order[] getEquipmentsOfPerson(Person person) {
 		if ( units.containsKey(person.hashCode()) ) {
-			return units.get(person.hashCode());
+			//Order[] orderList = getOrdersListForPerson(units.get(person.hashCode()));
+			
+			return getOrdersListForPerson(units.get(person.hashCode()));
 		} else {
-			int[] eq = new int[0]; 
+			Order[] eq = new Order[0]; 
 			return eq;
 		}
+	}
+	
+	private Order[] getOrdersListForPerson(Order[] orders ) {
+		Order[] eq = new Order[getOrdersArraySize(orders)];
+		for ( int i = 0; i < getOrdersArraySize(orders); i++ ) {
+			eq[i] = orders[i];
+		}
+		
+		return eq;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderDB [units=" + units + "]";
+		String str = "";
+		//return "OrderDB [units=" + units + "]";
+		for (Order[] value : units.values() ){
+			for (int i=0; i<value.length; i++){
+				str += "Value: " + value[i];
+			}
+		}
+		return str;
 	}
 	
 }

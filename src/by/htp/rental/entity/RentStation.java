@@ -1,15 +1,14 @@
 package by.htp.rental.entity;
 
 import java.util.Arrays;
-
 import by.htp.rental.interf.IRentStation;
 
 public class RentStation implements IRentStation{
 
 	public Equipment[] equipments = new Equipment[5];
-	public int[] spareEquipments = new int[5];
-	public int[] engagedEquipments = new int[5];
-	
+	private int[] spareEquipments = new int[5];
+	private int[] engagedEquipments = new int[5];
+
 	public void addEquipment(Equipment equipment) {
 		equipments = addEquipmentRecord(equipments, equipment);
 		spareEquipments = addSpareRecord(spareEquipments, equipment.getId());
@@ -17,7 +16,8 @@ public class RentStation implements IRentStation{
 	
 	public Equipment[] addEquipmentRecord(Equipment[] equipments, Equipment equipment) {
 		int emptyIndex = -1;
-		while ( (emptyIndex = getEmptyEquipmentIndex()) == -1 ) {
+		System.out.println(emptyIndex = getEmptyEquipmentIndex(equipments));
+		while ( (emptyIndex = getEmptyEquipmentIndex(equipments)) == -1 ) {
 			Equipment[] serv = new Equipment[equipments.length + 5];
 			for (int i = 0; i < equipments.length; i++){
 				serv[i] = equipments[i];
@@ -29,7 +29,7 @@ public class RentStation implements IRentStation{
 		return equipments;
 	}
 	
-	private int getEmptyEquipmentIndex() {
+	private int getEmptyEquipmentIndex(Equipment[] equipments) {
 		for ( int i = 0; i < equipments.length; i++ ) {
 			if ( equipments[i] == null ) {
 				return i;
@@ -53,7 +53,7 @@ public class RentStation implements IRentStation{
 
 	@Override
 	public String toString() {
-		return "RentStation [equipments=" + Arrays.toString(equipments) + "]";
+		return "RentStation [equipments=" + Arrays.toString(getEquipments()) + "]";
 	}
 	
 	public int[] getSpareEquipments() {
@@ -83,18 +83,33 @@ public class RentStation implements IRentStation{
 		return eq;
 	}
 	
-	public int[] addSpareRecord(int[] spareEquipments, int id) {
-		int emptyIndex = -1;
-		while ( (emptyIndex = getEmptyArrayIndex(spareEquipments)) == -1 ) {
-			int[] serv = new int[spareEquipments.length + 5];
-			for (int i = 0; i < spareEquipments.length; i++){
-				serv[i] = spareEquipments[i];
-			}
-			spareEquipments = serv;
-		}
-		spareEquipments[emptyIndex] = id;
+	public int[] addSpareRecord(int[] equipments, int id) {
+		equipments = addSpareOrEngagedRecord(equipments, id);
 		
-		return spareEquipments;
+		return equipments;
+	}
+	
+	public int[] addEngagedRecord(int[] equipments, int id) {
+		/*System.out.println("engaged!");
+		for ( int i = 0; i < equipments.length; i++ ) {
+			System.out.println(equipments[i]);
+		}*/
+		equipments = addSpareOrEngagedRecord(equipments, id);
+		return equipments;
+	}
+	
+	private int[] addSpareOrEngagedRecord(int[] equipments, int id) {
+		int emptyIndex = -1;
+		while ( (emptyIndex = getEmptyArrayIndex(equipments)) == -1 ) {
+			int[]  serv = new int[equipments.length + 5];
+			for (int i = 0; i < equipments.length; i++){
+				serv[i] = equipments[i];
+			}
+			equipments = serv;
+		}
+		equipments[emptyIndex] = id;
+
+		return equipments;
 	}
 	
 	private int getEmptyArrayIndex(int[] arrayEq) {
@@ -118,5 +133,60 @@ public class RentStation implements IRentStation{
 		
 		return 0;
 	}
+	
+	public int[] deleteSpareRecord(int[] equipments, int id) {
+		equipments = deleteSpareOrEngagedRecord(equipments, id);
+		
+		return equipments;
+	}
+	
+	public int[] deleteEngagedRecord(int[] equipments, int id) {
+		equipments = deleteSpareOrEngagedRecord(equipments, id);
+		
+		return equipments;
+	}
+	
+	private int[] deleteSpareOrEngagedRecord(int[] equipments, int id) {
+		int listLength = equipments.length;
+		
+		for ( int i = 0; i < listLength; i++ ) {
+			if ( equipments[i] == id) {
+				int equipmentsServ[] = new int[equipments.length - 1];
+				System.arraycopy(equipments, 0, equipmentsServ, 0, i);
+				System.arraycopy(equipments, i+1, equipmentsServ, i, listLength - i - 1);
+				listLength--;
+				equipments = equipmentsServ;
+				i--;
+			}
+		}
+		
+		return equipments;
+	}
+
+	public void setSpareEquipments(int[] spareEquipments) {
+		this.spareEquipments = spareEquipments;
+	}
+
+	public void setEngagedEquipments(int[] engagedEquipments) {
+		this.engagedEquipments = engagedEquipments;
+	}
+	
+	///// find equipment by param
+	public Equipment[] findEquipmentByParams(double price) {
+		Equipment[] eq = new Equipment[5];
+		for ( int i = 0; i < getEquipmentsArraySize(); i++ ) {
+			if ( equipments[i].getPrice() < price && !Arrays.asList(getSpareEquipments()).contains(equipments[i].getId()) ) {
+				eq = addEquipmentRecord(eq, equipments[i]);
+			}
+		}
+		int emptyIndex = getEmptyEquipmentIndex(eq);
+		Equipment[] res = new Equipment[emptyIndex];
+		for ( int i = 0; i < emptyIndex ; i++ ) {
+			res[i] = eq[i];
+		}
+			
+		return res;
+	}
+	
 
 }

@@ -2,6 +2,7 @@ package by.htp.rental.entity;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
 public class RentalManager {
 	
@@ -15,19 +16,15 @@ public class RentalManager {
 	}
 	
 	public boolean rent(Order order) {
+		resetEquipments();
 		if ( isSpareEquipment(order) && !isExceededNumberOfEquipmentForUser(order.getPerson()) ){
 			// add order to person
 			orderDB.addOrder(order);
-			rentStation.addSpareRecord(rentStation.engagedEquipments, order.getEquipmentId());
+			rentStation.setEngagedEquipments(rentStation.addEngagedRecord(rentStation.getEngagedEquipments(), order.getEquipmentId()));
+			rentStation.setSpareEquipments(rentStation.deleteSpareRecord(rentStation.getSpareEquipments(), order.getEquipmentId()));
 			return true;
 		}
 		return false;
-	}
-	
-	private boolean isEquipmentSpare(Equipment equipment) {
-
-		//return equipment.getSpare();
-		return true;
 	}
 	
 	private boolean isExceededNumberOfEquipmentForUser(Person person) {
@@ -39,7 +36,42 @@ public class RentalManager {
 	}
 	
 	private boolean isSpareEquipment(Order order){
-		return Arrays.asList(rentStation.getSpareEquipments()).contains( order.getEquipmentId() );
+		boolean isset = false;
+		for (int i=0; i<rentStation.getSpareEquipments().length; i++) {
+			if (rentStation.getSpareEquipments()[i] == order.getEquipmentId() ) {
+				isset = true;
+			}
+		}
+		
+		return isset;
+	}
+	
+	public void resetEquipments() {
+		for (Order[] value : (orderDB.getUnits()).values()) {
+			for (int i = 0; i < value.length; i++){
+				if ( value[i] != null && isEquipmentIsRentByDate(value[i])) {
+					value[i] = null;
+					rentStation.setEngagedEquipments(rentStation.deleteEngagedRecord(rentStation.getEngagedEquipments(), value[i].getEquipmentId()));
+					rentStation.setSpareEquipments(rentStation.addSpareRecord(rentStation.getSpareEquipments(), value[i].getEquipmentId()));
+				}
+			}
+		}
+	}
+	
+	private boolean isEquipmentIsRentByDate(Order order) {
+		return order.getRentDate().getTime() + order.getRentPeriod() * 60 * 60 < new Date().getTime();
+	}
+	
+	public Equipment[] getRentedEquipmentsByTime(long from, long to) {
+		for (Order[] value : (orderDB.getUnits()).values()) {
+			for (int i = 0; i < value.length; i++){
+				if ( value[i] != null && value[i].getRentDate().getTime() >= from 
+						&& value[i].getRentDate().getTime() <= to ) {
+					System.out.println(value[i].getEquipmentId());
+				}
+			}
+		}
+		return new Equipment[0];
 	}
 	
 }

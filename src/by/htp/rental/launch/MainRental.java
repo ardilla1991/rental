@@ -1,5 +1,7 @@
 package by.htp.rental.launch;
 
+import java.util.Date;
+
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.CategoryEq;
 import by.htp.rental.entity.Equipment;
@@ -22,23 +24,22 @@ public class MainRental {
 		Equipment mainEq2 = new Bycicle(2, 5.4, 1, 10, 1, CategoryEq.CHILD, 5);
 		Equipment mainEq3 = new Skate(3, 10, 3, 2, 1, CategoryEq.ADULT, 2);
 		Equipment mainEq4 = new Helmet(4, 34, 23, 2, 2, CategoryEq.ADULT, MaterialType.WOOD, 20);
-		Equipment mainEq5 = new Helmet(5, 34, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
+		Equipment mainEq5 = new Helmet(5, 34.6, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
 		
-		Equipment mainEq6 = new Helmet(6, 34, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
+		Equipment mainEq6 = new Helmet(6, 34.3, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
 		RentStation rentStation = new RentStation();
 		rentStation.addEquipment(mainEq1);
 		rentStation.addEquipment(mainEq3);
 		rentStation.addEquipment(mainEq2);
 		rentStation.addEquipment(mainEq4);
 		rentStation.addEquipment(mainEq5);
-		//rentStation.addEquipment(mainEq6);
-		System.out.println("57");
+		rentStation.addEquipment(mainEq6);
 		Printer print = new Printer();
 		
 		print.printRes("All Equipments", rentStation);
-		
 
 		int[] eqSpare = rentStation.getSpareEquipments();
+		System.out.println("fff="+eqSpare.length);
 		print.printRes("All spare equipments:", eqSpare);
 		
 		int[] eqEngaged = rentStation.getEngagedEquipments();
@@ -46,30 +47,44 @@ public class MainRental {
 		
 		Person person1 = new Person("Ivan", "Ivanov", "12345678");
 		
-		/*  Create order for person */
-		Order order1 = new Order();
-		order1.createOrder(person1, mainEq1, 24);
-		//order1.createOrder(person1, mainEq2.getId());
-		
 		OrderDB orderDB = new OrderDB();
 		RentalManager rentalManager = new RentalManager(rentStation, orderDB);
+		
+		//  Create order for person //
+		System.out.println("Create order");
+		Order order1 = new Order();
+		order1.createOrder(person1, mainEq1, 24);
 		boolean resRent1 = rentalManager.rent(order1);
-		
-		
-		System.out.print(orderDB);
-
 		if ( resRent1 ) {
-			print.printRes("Equipment was added", new Equipment[0]);
+			print.printRes("Equipment was added");
 		} else {
-			print.printRes("Equipment wasn't added", new Equipment[0]);
+			print.printRes("Equipment wasn't added");
+		}
+
+		print.printRes("spare=", rentStation.getSpareEquipments());
+		print.printRes("engaged=", rentStation.getEngagedEquipments());
+		System.out.print(orderDB.getUnits());
+		
+		////////////////////////////////
+		Order order2 = new Order();
+		order2.createOrder(person1, mainEq2, 12);
+		boolean resRent2 = rentalManager.rent(order2);
+		if ( resRent2 ) {
+			print.printRes("Equipment was added");
+		} else {
+			print.printRes("Equipment wasn't added");
 		}
 		
-		/*int[] eqSpare1 = rentStation.getSpareEquipments();
-		print.printRes("All spare equipments:", eqSpare1);
+		print.printRes("spare=", rentStation.getSpareEquipments());
+		print.printRes("engaged=", rentStation.getEngagedEquipments());
+		System.out.print(orderDB.getUnits());
 		
-		int[] eqEngaged1 = rentStation.getEngagedEquipments();
-		print.printRes("All engaged equipments:", eqEngaged1);*/
+		////   find equipment by params
+		rentalManager.resetEquipments();
+		print.printRes("There are founded equipments", rentStation.findEquipmentByParams(40));
 		
+		print.printRes("There are founded equipments by last hour");
+		rentalManager.getRentedEquipmentsByTime(new Date().getTime() - 60 * 60, new Date().getTime());
 		
 	}
 

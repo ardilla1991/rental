@@ -24,4 +24,8 @@ public class Printer {
 			System.out.println("Equipment" + i + ": obj: " + eq[i]); 
 		}
 	}
+	
+	public void printRes(String str) {
+		System.out.println(str);
+	}
 }
