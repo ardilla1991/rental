@@ -5,8 +5,8 @@ final public class Helmet extends Accessory{
 	private MaterialType material;
 	private int size;
 	
-	public Helmet(int id, double price, double weight, double width, double height, CategoryEq category, MaterialType material, int size) {
-		super(id, price, weight, width, height, category);
+	public Helmet(double price, double weight, double width, double height, CategoryEq category, MaterialType material, int size) {
+		super(price, weight, width, height, category);
 		this.material = material;
 		this.size = size;
 	}

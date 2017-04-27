@@ -1,5 +1,6 @@
 package by.htp.rental.launch;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import by.htp.rental.entity.Bycicle;
@@ -19,15 +20,17 @@ public class MainRental {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		Equipment mainEq1 = new Bycicle(1, 10.4, 1, 7, 0.7, CategoryEq.ADULT, 5);
-		Equipment mainEq2 = new Bycicle(2, 5.4, 1, 10, 1, CategoryEq.CHILD, 5);
-		Equipment mainEq3 = new Skate(3, 10, 3, 2, 1, CategoryEq.ADULT, 2);
-		Equipment mainEq4 = new Helmet(4, 34, 23, 2, 2, CategoryEq.ADULT, MaterialType.WOOD, 20);
-		Equipment mainEq5 = new Helmet(5, 34.6, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
-		
-		Equipment mainEq6 = new Helmet(6, 34.3, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
 		RentStation rentStation = new RentStation();
+		
+		Equipment mainEq1 = new Bycicle(10.4, 1, 7, 0.7, CategoryEq.ADULT, 5);
+		Equipment mainEq2 = new Bycicle(5.4, 1, 10, 1, CategoryEq.CHILD, 5);
+		Equipment mainEq3 = new Skate(10, 3, 2, 1, CategoryEq.ADULT, 2);
+		
+		/// accessory
+		Equipment mainEq4 = new Helmet(34, 23, 2, 2, CategoryEq.ADULT, MaterialType.WOOD, 20);
+		Equipment mainEq5 = new Helmet(34.6, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
+		Equipment mainEq6 = new Helmet(34.3, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
+		
 		rentStation.addEquipment(mainEq1);
 		rentStation.addEquipment(mainEq3);
 		rentStation.addEquipment(mainEq2);
@@ -38,11 +41,10 @@ public class MainRental {
 		
 		print.printRes("All Equipments", rentStation);
 
-		int[] eqSpare = rentStation.getSpareEquipments();
-		System.out.println("fff="+eqSpare.length);
+		ArrayList<Integer> eqSpare = rentStation.getSpareEquipments();
 		print.printRes("All spare equipments:", eqSpare);
 		
-		int[] eqEngaged = rentStation.getEngagedEquipments();
+		ArrayList<Integer> eqEngaged = rentStation.getEngagedEquipments();
 		print.printRes("All engaged equipments:", eqEngaged);
 		
 		Person person1 = new Person("Ivan", "Ivanov", "12345678");
