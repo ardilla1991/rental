@@ -1,1 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<equipments
+xmlns="http://www.example.org/equipmentsSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.example.org/equipmentsSchema equipmentsSchema.xsd"
+>
+	<bycicle>
+		<price>4.5</price>
+		<weight>7.9</weight>
+		<width>3</width>
+		<height>1</height>
+		<category>adult</category>
+		<count-speed-mode>20</count-speed-mode>
+	</bycicle>
+	<bycicle>
+		<price>4.1</price>
+		<weight>7.3</weight>
+		<width>2</width>
+		<height>1.1</height>
+		<category>child</category>
+		<count-speed-mode>3</count-speed-mode>
+	</bycicle>
+	<skate>
+		<price>2</price>
+		<weight>0.2</weight>
+		<width>0.45</width>
+		<height>0.15</height>
+		<category>child</category>
+		<size>36</size>
+	</skate>
+	<skate>
+		<price>2.3</price>
+		<weight>0.7</weight>
+		<width>0.5</width>
+		<height>0.2</height>
+		<category>adult</category>
+		<size>39</size>
+	</skate>
+</equipments>

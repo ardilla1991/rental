@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
 targetNamespace="http://www.example.org/equipmentsSchema" 
 xmlns:tns="http://www.example.org/equipmentsSchema" 
 elementFormDefault="qualified">
-</schema>
+	<xs:element name="equipments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tns:equipment" minOccurs="1" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="equipment" type="tns:EquipmentType" abstract="true"></xs:element>
+	<xs:element name="bycicle" type="tns:Bycicle" substitutionGroup="tns:equipment"></xs:element>
+	<xs:element name="skate" type="tns:Skate" substitutionGroup="tns:equipment"></xs:element>
+	<xs:complexType name="EquipmentType">
+		<xs:sequence>
+			<xs:element name="price" type="xs:double" />
+			<xs:element name="weight" type="xs:double" />
+			<xs:element name="width" type="xs:double" />
+			<xs:element name="height" type="xs:double" />
+			<xs:element name="category" type="tns:Category" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Bycicle">
+		<xs:complexContent>
+			<xs:extension base="tns:EquipmentType">
+				<xs:sequence>
+					<xs:element name="count-speed-mode" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Skate">
+		<xs:complexContent>
+			<xs:extension base="tns:EquipmentType">
+				<xs:sequence>
+					<xs:element name="size" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="Category">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="adult"></xs:enumeration>
+			<xs:enumeration value="child"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

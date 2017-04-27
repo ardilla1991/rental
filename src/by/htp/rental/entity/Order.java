@@ -8,7 +8,7 @@ public class Order {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + equipmentId;
+		result = prime * result + ((equipment == null) ? 0 : equipment.hashCode());
 		result = prime * result + ((person == null) ? 0 : person.hashCode());
 		result = prime * result + ((rentDate == null) ? 0 : rentDate.hashCode());
 		result = prime * result + rentPeriod;
@@ -24,7 +24,10 @@ public class Order {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		if (equipmentId != other.equipmentId)
+		if (equipment == null) {
+			if (other.equipment != null)
+				return false;
+		} else if (!equipment.equals(other.equipment))
 			return false;
 		if (person == null) {
 			if (other.person != null)
@@ -42,7 +45,7 @@ public class Order {
 	}
 
 	private Person person;
-	private int equipmentId;
+	private Equipment equipment;
 	private Date rentDate;
 	private int rentPeriod;
 
@@ -58,17 +61,17 @@ public class Order {
 		this.person = person;
 	}
 
-	public int getEquipmentId() {
-		return equipmentId;
+	public Equipment getEquipment() {
+		return equipment;
 	}
 
-	public void setEquipmentId(int equipmentId) {
-		this.equipmentId = equipmentId;
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
 	}
 	
 	public void createOrder(Person person, Equipment equipment, int rentPeriod) {
 		this.person = person;
-		this.equipmentId = equipment.getId();
+		this.equipment = equipment;
 		this.rentDate = new Date();
 		this.rentPeriod = rentPeriod;
 	}

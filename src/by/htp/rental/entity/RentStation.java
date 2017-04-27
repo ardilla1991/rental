@@ -1,6 +1,5 @@
 package by.htp.rental.entity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import by.htp.rental.interf.IRentStation;
@@ -8,14 +7,14 @@ import by.htp.rental.interf.IRentStation;
 public class RentStation implements IRentStation{
 
 	private HashMap<Integer, Equipment> equipments = new HashMap<>();
-	private ArrayList<Integer> spareEquipments = new ArrayList<>();
-	private ArrayList<Integer> engagedEquipments = new ArrayList<>();
+	private HashMap<Integer, Equipment> spareEquipments = new HashMap<>();
+	private HashMap<Integer, Equipment> engagedEquipments = new HashMap<>();
 
 	public void addEquipment(Equipment equipment) {
 		int id = generateIdOfEquipment();
 		equipments.put(id, equipment);
 		equipment.setId(id);
-		spareEquipments.add(id);
+		spareEquipments.put(id, equipment);
 	}
 	
 	private int generateIdOfEquipment() {
@@ -29,12 +28,12 @@ public class RentStation implements IRentStation{
 		return "RentStation [equipments=" + equipments + "]";
 	}
 	
-	public ArrayList<Integer> getSpareEquipments() {
+	public HashMap<Integer, Equipment> getSpareEquipments() {
 		
 		return spareEquipments;
 	}
 	
-	public ArrayList<Integer> getEngagedEquipments() {
+	public HashMap<Integer, Equipment> getEngagedEquipments() {
 		
 		return engagedEquipments;
 	}
@@ -44,20 +43,20 @@ public class RentStation implements IRentStation{
 		return equipments;
 	}
 	
-	public void addEngagedRecord(int id) {
-		engagedEquipments.add(id);
+	public void addEngagedRecord(Equipment eq) {
+		engagedEquipments.put(eq.getId(), eq);
 	}
 	
-	public void addSpareRecord(int id) {
-		engagedEquipments.add(id);
+	public void addSpareRecord(Equipment eq) {
+		engagedEquipments.put(eq.getId(), eq);
 	}	
 	
-	public void deleteSpareRecord(int id) {
-		spareEquipments.remove(new Integer(id));
+	public void deleteSpareRecord(Equipment eq) {
+		spareEquipments.remove(eq.getId());
 	}
 	
-	public void deleteEngagedRecord(int id) {
-		engagedEquipments.remove(new Integer(id));
+	public void deleteEngagedRecord(Equipment eq) {
+		engagedEquipments.remove(eq.getId());
 	}
 	
 	///// find equipment by param
@@ -72,5 +71,13 @@ public class RentStation implements IRentStation{
 		return eq;
 	}
 	
+	public Equipment findSpareEquipmentByType(String type) throws ClassNotFoundException {
+		for ( HashMap.Entry<Integer, Equipment> entry : spareEquipments.entrySet()) {
+			if ( Class.forName("by.htp.rental.entity."+type).isInstance(entry.getValue())) {
+				return entry.getValue();
+			}
+		}
+		return null;
+	}
 
 }

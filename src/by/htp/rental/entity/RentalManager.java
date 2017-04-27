@@ -1,9 +1,7 @@
 package by.htp.rental.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 
 public class RentalManager {
 	
@@ -21,8 +19,8 @@ public class RentalManager {
 		if ( isSpareEquipment(order) && !isExceededNumberOfEquipmentForUser(order.getPerson()) ){
 			// add order to person
 			orderDB.addOrder(order);
-			rentStation.addEngagedRecord(order.getEquipmentId());
-			rentStation.deleteSpareRecord(order.getEquipmentId());
+			rentStation.addEngagedRecord(order.getEquipment());
+			rentStation.deleteSpareRecord(order.getEquipment());
 			return true;
 		}
 		return false;
@@ -38,7 +36,8 @@ public class RentalManager {
 	
 	private boolean isSpareEquipment(Order order){
 		boolean isset = false;
-		isset = rentStation.getSpareEquipments().indexOf(order.getEquipmentId()) > -1 ? true : false; 
+		System.out.println((rentStation.getSpareEquipments()).get(order.getEquipment().getId()));
+		isset = (rentStation.getSpareEquipments()).get(order.getEquipment().getId()) != null ? true : false; 
 		
 		return isset;
 	}
@@ -48,8 +47,8 @@ public class RentalManager {
 			for (int i = 0; i < value.size(); i++){
 				if ( value.get(i) != null && isEquipmentIsRentByDate(value.get(i))) {
 					value.remove(i);
-					rentStation.deleteEngagedRecord(value.get(i).getEquipmentId());
-					rentStation.addSpareRecord(value.get(i).getEquipmentId());
+					rentStation.deleteEngagedRecord(value.get(i).getEquipment());
+					rentStation.addSpareRecord(value.get(i).getEquipment());
 				}
 			}
 		}
@@ -64,7 +63,7 @@ public class RentalManager {
 			for (int i = 0; i < value.size(); i++){
 				if ( value.get(i) != null && value.get(i).getRentDate().getTime() >= from 
 						&& value.get(i).getRentDate().getTime() <= to ) {
-					System.out.println(value.get(i).getEquipmentId());
+					System.out.println(value.get(i).getEquipment());
 				}
 			}
 		}

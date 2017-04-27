@@ -1,7 +1,19 @@
 package by.htp.rental.launch;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+
+import org.xml.sax.HandlerBase;
+import org.xml.sax.SAXException;
 
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.CategoryEq;
@@ -18,10 +30,15 @@ import by.htp.rental.writer.Printer;
 
 public class MainRental {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public static void main(String[] args) throws ClassNotFoundException {
 		RentStation rentStation = new RentStation();
 		
+		//addEquipments(rentStation);
+		addEquipmentsFromXML(rentStation);
+		start(rentStation);
+	}
+	
+	private static void addEquipments(RentStation rentStation) {
 		Equipment mainEq1 = new Bycicle(10.4, 1, 7, 0.7, CategoryEq.ADULT, 5);
 		Equipment mainEq2 = new Bycicle(5.4, 1, 10, 1, CategoryEq.CHILD, 5);
 		Equipment mainEq3 = new Skate(10, 3, 2, 1, CategoryEq.ADULT, 2);
@@ -37,14 +54,44 @@ public class MainRental {
 		rentStation.addEquipment(mainEq4);
 		rentStation.addEquipment(mainEq5);
 		rentStation.addEquipment(mainEq6);
+	}
+	
+	private static void addEquipmentsFromXML(RentStation rentStation) {
+		String filename = "D:\\java\\JD1\\rental\\resource\\equipments.xml";
+		String schemaname = "D:\\java\\JD1\\rental\\resource\\equipmentsSchema.xsd";
+		String logname = "D:\\java\\JD1\\rental\\resource\\log.txt";
+		Schema schema = null;
+		String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+		SchemaFactory factory = SchemaFactory.newInstance(language);
+		try {
+		// установка проверки с использованием XSD
+		schema = factory.newSchema(new File(schemaname));
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		spf.setSchema(schema);
+		// создание объекта-парсера
+		SAXParser parser = spf.newSAXParser();
+		// установка обработчика ошибок и запуск
+		parser.parse(filename, new HandlerBase());
+		System.out.println(filename + " is valid");
+		} catch (ParserConfigurationException e) {
+		System.err.println(filename + " config error: " + e.getMessage());
+		} catch (SAXException e) {
+		System.err.println(filename + " SAX error: " + e.getMessage());
+		} catch (IOException e) {
+		System.err.println("I/O error: " + e.getMessage());
+		}
+	}
+	
+	private static void start(RentStation rentStation) throws ClassNotFoundException {
+
 		Printer print = new Printer();
 		
 		print.printRes("All Equipments", rentStation);
 
-		ArrayList<Integer> eqSpare = rentStation.getSpareEquipments();
+		HashMap<Integer, Equipment> eqSpare = rentStation.getSpareEquipments();
 		print.printRes("All spare equipments:", eqSpare);
 		
-		ArrayList<Integer> eqEngaged = rentStation.getEngagedEquipments();
+		HashMap<Integer, Equipment> eqEngaged = rentStation.getEngagedEquipments();
 		print.printRes("All engaged equipments:", eqEngaged);
 		
 		Person person1 = new Person("Ivan", "Ivanov", "12345678");
@@ -55,26 +102,32 @@ public class MainRental {
 		//  Create order for person //
 		System.out.println("Create order");
 		Order order1 = new Order();
-		order1.createOrder(person1, mainEq1, 24);
-		boolean resRent1 = rentalManager.rent(order1);
-		if ( resRent1 ) {
-			print.printRes("Equipment was added");
-		} else {
-			print.printRes("Equipment wasn't added");
+		Equipment equipmentForRent = rentStation.findSpareEquipmentByType("Bycicle");
+		if ( equipmentForRent != null ) {
+			order1.createOrder(person1, equipmentForRent, 24);
+			boolean resRent1 = rentalManager.rent(order1);
+			if ( resRent1 ) {
+				print.printRes("Equipment was added");
+			} else {
+				print.printRes("Equipment wasn't added");
+			}
 		}
-
+		
 		print.printRes("spare=", rentStation.getSpareEquipments());
 		print.printRes("engaged=", rentStation.getEngagedEquipments());
 		System.out.print(orderDB.getUnits());
 		
 		////////////////////////////////
 		Order order2 = new Order();
-		order2.createOrder(person1, mainEq2, 12);
-		boolean resRent2 = rentalManager.rent(order2);
-		if ( resRent2 ) {
-			print.printRes("Equipment was added");
-		} else {
-			print.printRes("Equipment wasn't added");
+		Equipment equipmentForRent2 = rentStation.findSpareEquipmentByType("Bycicle");
+		if ( equipmentForRent2 != null ) {
+			order2.createOrder(person1, equipmentForRent2, 12);
+			boolean resRent2 = rentalManager.rent(order2);
+			if ( resRent2 ) {
+				print.printRes("Equipment was added");
+			} else {
+				print.printRes("Equipment wasn't added");
+			}
 		}
 		
 		print.printRes("spare=", rentStation.getSpareEquipments());
@@ -87,7 +140,6 @@ public class MainRental {
 		
 		print.printRes("There are founded equipments by last hour");
 		rentalManager.getRentedEquipmentsByTime(new Date().getTime() - 60 * 60, new Date().getTime());
-		
 	}
 
 }
