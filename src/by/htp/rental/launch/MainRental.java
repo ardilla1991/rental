@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,7 +14,9 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.HandlerBase;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.CategoryEq;
@@ -26,10 +29,13 @@ import by.htp.rental.entity.Person;
 import by.htp.rental.entity.RentStation;
 import by.htp.rental.entity.RentalManager;
 import by.htp.rental.entity.Skate;
+import by.htp.rental.parser.EquipmentSaxHandler;
 import by.htp.rental.writer.Printer;
 
 public class MainRental {
 
+	public static final String XMLFilePath = "D:\\java\\JD1\\rental\\resource\\equipments.xml";
+	
 	public static void main(String[] args) throws ClassNotFoundException {
 		RentStation rentStation = new RentStation();
 		
@@ -57,7 +63,50 @@ public class MainRental {
 	}
 	
 	private static void addEquipmentsFromXML(RentStation rentStation) {
-		String filename = "D:\\java\\JD1\\rental\\resource\\equipments.xml";
+		
+		//isXMLAccordingWithXSD();
+		SAXParser();
+	}
+	
+	private static void SAXParser() {
+		try {
+			org.xml.sax.XMLReader reader = XMLReaderFactory.createXMLReader();
+			try {
+				EquipmentSaxHandler handler = new EquipmentSaxHandler();
+				reader.setContentHandler(handler);
+				InputSource inputSource = new InputSource(XMLFilePath);
+				System.out.println(inputSource);
+				reader.parse(inputSource);
+				
+				//включение проверки действительности
+				reader.setFeature("http://xml.org/sax/features/validation", true);
+				
+				//включение обработки пространства имен
+				reader.setFeature("http://xml.org/sax/features/namespaces", true);
+				
+				//включение канонизации строк
+				reader.setFeature("http://xml.org/sax/features/string-interning", true);
+				
+				//отключение обработки схем
+				reader.setFeature("http://xml.org/sax/features/validation/schema", false);
+				
+				List<Equipment> equipments = handler.getEquipmentList();
+				
+				for (Equipment  eq : equipments) {
+					System.out.println(eq.getId());
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void isXMLAccordingWithXSD() {
+		String filename = XMLFilePath;
 		String schemaname = "D:\\java\\JD1\\rental\\resource\\equipmentsSchema.xsd";
 		String logname = "D:\\java\\JD1\\rental\\resource\\log.txt";
 		Schema schema = null;

@@ -8,7 +8,11 @@ public abstract class Equipment {
 	private double width;
 	private double height;
 	private CategoryEq category; // for child or for adult 
-
+	
+	public Equipment() {
+		
+	}
+	
 	public Equipment(double price, double weight, double width, double height, CategoryEq category) {
 		this.price = price;
 		this.weight = weight;
