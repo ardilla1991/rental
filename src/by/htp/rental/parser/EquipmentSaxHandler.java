@@ -2,7 +2,8 @@ package by.htp.rental.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Attributes;
+//import java.util.jar.Attributes;
+import org.xml.sax.Attributes;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -15,7 +16,7 @@ import by.htp.rental.entity.Skate;
 public class EquipmentSaxHandler extends DefaultHandler{
 	private List<Equipment> eqList = new ArrayList<Equipment>();
 	private Equipment equipment;
-	private StringBuilder text;
+	private EquipmentTagName text;
 	
 	public List<Equipment> getEquipmentList() {
 		return eqList;
@@ -33,36 +34,50 @@ public class EquipmentSaxHandler extends DefaultHandler{
 			String qName, Attributes attributes) throws SAXException {
 		System.out.println("startElement -> " + "uri: " + uri 
 				+ ", localName: " + localName + ", qName: " + qName);
-		text = new StringBuilder();
-		if (qName.equals("bycicle")) {
+		if ("bycicle".equals(localName)) {
 			equipment = new Bycicle();
-		} else if (qName.equals("skate")) {
+		} else if ("skate".equals(localName)) {
 			equipment = new Skate();
+		} else {
+			text = EquipmentTagName.valueOf(qName.toUpperCase().replace("-", "_"));
 		}
 	}
 	
-	public void endElement(String uri, String localName, String qName) throws SAXException{
-		EquipmentTagName tagName = EquipmentTagName.valueOf(qName.toUpperCase().replace("-", "_"));
+	public void characters(char[] buffer, int start, int length) {
+		//text.append(buffer, start, length);
+		System.out.println(text);
 		
-		switch(tagName) {
-			case PRICE:
-				equipment.setPrice(Double.parseDouble(text.toString()));
-				break;
-			case WEIGHT:
-				equipment.setWeight(Double.parseDouble(text.toString()));
-				break;
-			case WIDTH:
-				equipment.setWidth(Double.parseDouble(text.toString()));
-				break;
-			case HEIGHT:
-				equipment.setHeight(Double.parseDouble(text.toString()));
-				break;
-			case SKYTE:
-			case BYCICLE:
-				eqList.add(equipment);
-				equipment = null;
-				break;
+		String s = new String(buffer, start, length).trim();
+		System.out.println(s);
+		if ( text != null ) {
+			switch (text) {
+				case PRICE:
+					equipment.setPrice(Double.parseDouble(s));
+					break;
+				case WEIGHT:
+					equipment.setWeight(Double.parseDouble(s));
+					break;
+				case WIDTH:
+					equipment.setWidth(Double.parseDouble(s));
+					break;
+				case HEIGHT:
+					equipment.setHeight(Double.parseDouble(s));
+					break;
+				//default:
+				//	throw new EnumConstantNotPresentException(
+				//		text.getDeclaringClass(), text.name());
+			}
 		}
+		text = null;
+	}
+	
+	public void endElement(String uri, String localName, String qName) throws SAXException{
+		//EquipmentTagName tagName = EquipmentTagName.valueOf(qName.toUpperCase().replace("-", "_"));
+		if ("skyte".equals(localName) || "bycicle".equals(localName)) {
+			eqList.add(equipment);
+			equipment = null;
+		}
+		
 	}
 	
 	public void warning(SAXParseException exception) {

@@ -65,17 +65,17 @@ public class MainRental {
 	private static void addEquipmentsFromXML(RentStation rentStation) {
 		
 		//isXMLAccordingWithXSD();
-		SAXParser();
+		SAXParser(rentStation);
 	}
 	
-	private static void SAXParser() {
+	private static void SAXParser(RentStation rentStation) {
 		try {
 			org.xml.sax.XMLReader reader = XMLReaderFactory.createXMLReader();
 			try {
 				EquipmentSaxHandler handler = new EquipmentSaxHandler();
 				reader.setContentHandler(handler);
 				InputSource inputSource = new InputSource(XMLFilePath);
-				System.out.println(inputSource);
+				System.out.println(new InputSource(XMLFilePath));
 				reader.parse(inputSource);
 				
 				//включение проверки действительности
@@ -88,12 +88,13 @@ public class MainRental {
 				reader.setFeature("http://xml.org/sax/features/string-interning", true);
 				
 				//отключение обработки схем
-				reader.setFeature("http://xml.org/sax/features/validation/schema", false);
+				//reader.setFeature("http://xml.org/sax/features/validation/schema", false);
 				
 				List<Equipment> equipments = handler.getEquipmentList();
 				
 				for (Equipment  eq : equipments) {
-					System.out.println(eq.getId());
+					System.out.println(eq);
+					rentStation.addEquipment(eq);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
