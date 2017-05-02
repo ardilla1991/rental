@@ -32,6 +32,7 @@ import by.htp.rental.entity.Skate;
 import by.htp.rental.parser.EquipmentDOMBuilder;
 import by.htp.rental.parser.EquipmentSaxBuilder;
 import by.htp.rental.parser.EquipmentSaxHandler;
+import by.htp.rental.parser.EquipmentStAXBuilder;
 import by.htp.rental.writer.Printer;
 
 public class MainRental {
@@ -68,7 +69,8 @@ public class MainRental {
 		
 		//isXMLAccordingWithXSD();
 		//SAXParser(rentStation);
-		DOMParser(rentStation);
+		//DOMParser(rentStation);
+		StAXParser(rentStation);
 	}
 	
 	private static void SAXParser(RentStation rentStation) {
@@ -86,6 +88,17 @@ public class MainRental {
 		EquipmentDOMBuilder domBuilder = new EquipmentDOMBuilder();
 		domBuilder.buildListEquipments(XMLFilePath);
 		List<Equipment> equipments = domBuilder.getEquipments();
+			
+		for (Equipment  eq : equipments) {
+			System.out.println(eq);
+			rentStation.addEquipment(eq);
+		}
+	}
+	
+	private static void StAXParser(RentStation rentStation) {
+		EquipmentStAXBuilder staxBuilder = new EquipmentStAXBuilder();
+		staxBuilder.buildListEquipments(XMLFilePath);
+		List<Equipment> equipments = staxBuilder.getEquipments();
 			
 		for (Equipment  eq : equipments) {
 			System.out.println(eq);
