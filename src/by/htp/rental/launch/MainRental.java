@@ -29,6 +29,7 @@ import by.htp.rental.entity.Person;
 import by.htp.rental.entity.RentStation;
 import by.htp.rental.entity.RentalManager;
 import by.htp.rental.entity.Skate;
+import by.htp.rental.parser.EquipmentSaxBuilder;
 import by.htp.rental.parser.EquipmentSaxHandler;
 import by.htp.rental.writer.Printer;
 
@@ -69,40 +70,13 @@ public class MainRental {
 	}
 	
 	private static void SAXParser(RentStation rentStation) {
-		try {
-			org.xml.sax.XMLReader reader = XMLReaderFactory.createXMLReader();
-			try {
-				EquipmentSaxHandler handler = new EquipmentSaxHandler();
-				reader.setContentHandler(handler);
-				InputSource inputSource = new InputSource(XMLFilePath);
-				System.out.println(new InputSource(XMLFilePath));
-				reader.parse(inputSource);
-				
-				//включение проверки действительности
-				reader.setFeature("http://xml.org/sax/features/validation", true);
-				
-				//включение обработки пространства имен
-				reader.setFeature("http://xml.org/sax/features/namespaces", true);
-				
-				//включение канонизации строк
-				reader.setFeature("http://xml.org/sax/features/string-interning", true);
-				
-				//отключение обработки схем
-				//reader.setFeature("http://xml.org/sax/features/validation/schema", false);
-				
-				List<Equipment> equipments = handler.getEquipmentList();
-				
-				for (Equipment  eq : equipments) {
-					System.out.println(eq);
-					rentStation.addEquipment(eq);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		EquipmentSaxBuilder saxBuilder = new EquipmentSaxBuilder();
+		saxBuilder.buildListEquipments(XMLFilePath);
+		List<Equipment> equipments = saxBuilder.getStudents();
+			
+		for (Equipment  eq : equipments) {
+			System.out.println(eq);
+			rentStation.addEquipment(eq);
 		}
 	}
 	
