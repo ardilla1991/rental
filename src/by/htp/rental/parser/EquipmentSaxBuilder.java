@@ -36,7 +36,7 @@ public class EquipmentSaxBuilder {
 		}
 	}
 	
-	public List<Equipment> getStudents() {
+	public List<Equipment> getEquipments() {
 		return eq;
 	}
 	

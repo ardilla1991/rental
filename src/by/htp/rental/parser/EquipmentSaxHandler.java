@@ -64,8 +64,8 @@ public class EquipmentSaxHandler extends DefaultHandler{
 					equipment.setHeight(Double.parseDouble(s));
 					break;
 				//default:
-				//	throw new EnumConstantNotPresentException(
-				//		text.getDeclaringClass(), text.name());
+					//throw new EnumConstantNotPresentException(
+						//text.getDeclaringClass(), text.name());
 			}
 		}
 		text = null;

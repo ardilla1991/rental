@@ -29,6 +29,7 @@ import by.htp.rental.entity.Person;
 import by.htp.rental.entity.RentStation;
 import by.htp.rental.entity.RentalManager;
 import by.htp.rental.entity.Skate;
+import by.htp.rental.parser.EquipmentDOMBuilder;
 import by.htp.rental.parser.EquipmentSaxBuilder;
 import by.htp.rental.parser.EquipmentSaxHandler;
 import by.htp.rental.writer.Printer;
@@ -66,13 +67,25 @@ public class MainRental {
 	private static void addEquipmentsFromXML(RentStation rentStation) {
 		
 		//isXMLAccordingWithXSD();
-		SAXParser(rentStation);
+		//SAXParser(rentStation);
+		DOMParser(rentStation);
 	}
 	
 	private static void SAXParser(RentStation rentStation) {
 		EquipmentSaxBuilder saxBuilder = new EquipmentSaxBuilder();
 		saxBuilder.buildListEquipments(XMLFilePath);
-		List<Equipment> equipments = saxBuilder.getStudents();
+		List<Equipment> equipments = saxBuilder.getEquipments();
+			
+		for (Equipment  eq : equipments) {
+			System.out.println(eq);
+			rentStation.addEquipment(eq);
+		}
+	}
+	
+	private static void DOMParser(RentStation rentStation) {
+		EquipmentDOMBuilder domBuilder = new EquipmentDOMBuilder();
+		domBuilder.buildListEquipments(XMLFilePath);
+		List<Equipment> equipments = domBuilder.getEquipments();
 			
 		for (Equipment  eq : equipments) {
 			System.out.println(eq);
@@ -88,21 +101,21 @@ public class MainRental {
 		String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
 		SchemaFactory factory = SchemaFactory.newInstance(language);
 		try {
-		// установка проверки с использованием XSD
-		schema = factory.newSchema(new File(schemaname));
-		SAXParserFactory spf = SAXParserFactory.newInstance();
-		spf.setSchema(schema);
-		// создание объекта-парсера
-		SAXParser parser = spf.newSAXParser();
-		// установка обработчика ошибок и запуск
-		parser.parse(filename, new HandlerBase());
-		System.out.println(filename + " is valid");
+			// установка проверки с использованием XSD
+			schema = factory.newSchema(new File(schemaname));
+			SAXParserFactory spf = SAXParserFactory.newInstance();
+			spf.setSchema(schema);
+			// создание объекта-парсера
+			SAXParser parser = spf.newSAXParser();
+			// установка обработчика ошибок и запуск
+			parser.parse(filename, new HandlerBase());
+			System.out.println(filename + " is valid");
 		} catch (ParserConfigurationException e) {
-		System.err.println(filename + " config error: " + e.getMessage());
+			System.err.println(filename + " config error: " + e.getMessage());
 		} catch (SAXException e) {
-		System.err.println(filename + " SAX error: " + e.getMessage());
+			System.err.println(filename + " SAX error: " + e.getMessage());
 		} catch (IOException e) {
-		System.err.println("I/O error: " + e.getMessage());
+			System.err.println("I/O error: " + e.getMessage());
 		}
 	}
 	
