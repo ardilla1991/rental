@@ -1,4 +1,4 @@
-package by.htp.rental.parser;
+package by.htp.rental.builder;
 
 import java.util.ArrayList;
 import java.util.List;

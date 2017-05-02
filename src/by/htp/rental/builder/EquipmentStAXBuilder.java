@@ -1,4 +1,4 @@
-package by.htp.rental.parser;
+package by.htp.rental.builder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +15,7 @@ import javax.xml.stream.XMLStreamReader;
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.Equipment;
 
-public class EquipmentStAXBuilder {
+public class EquipmentStAXBuilder extends AbstractEquipmentsBuilder{
 	private List<Equipment> eq = new ArrayList<Equipment>();
 	private XMLInputFactory inputFactory;
 	

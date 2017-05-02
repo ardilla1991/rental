@@ -14,10 +14,13 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import org.xml.sax.HandlerBase;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.XMLReaderFactory;
 
+import by.htp.rental.builder.AbstractEquipmentsBuilder;
+import by.htp.rental.builder.EquipmentBuilderFactory;
+import by.htp.rental.builder.EquipmentDOMBuilder;
+import by.htp.rental.builder.EquipmentSAXBuilder;
+import by.htp.rental.builder.EquipmentStAXBuilder;
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.CategoryEq;
 import by.htp.rental.entity.Equipment;
@@ -29,10 +32,6 @@ import by.htp.rental.entity.Person;
 import by.htp.rental.entity.RentStation;
 import by.htp.rental.entity.RentalManager;
 import by.htp.rental.entity.Skate;
-import by.htp.rental.parser.EquipmentDOMBuilder;
-import by.htp.rental.parser.EquipmentSaxBuilder;
-import by.htp.rental.parser.EquipmentSaxHandler;
-import by.htp.rental.parser.EquipmentStAXBuilder;
 import by.htp.rental.writer.Printer;
 
 public class MainRental {
@@ -68,38 +67,15 @@ public class MainRental {
 	private static void addEquipmentsFromXML(RentStation rentStation) {
 		
 		//isXMLAccordingWithXSD();
-		//SAXParser(rentStation);
-		//DOMParser(rentStation);
-		StAXParser(rentStation);
+		startParser("stax", rentStation); // "sax", "dom"
 	}
 	
-	private static void SAXParser(RentStation rentStation) {
-		EquipmentSaxBuilder saxBuilder = new EquipmentSaxBuilder();
-		saxBuilder.buildListEquipments(XMLFilePath);
-		List<Equipment> equipments = saxBuilder.getEquipments();
-			
-		for (Equipment  eq : equipments) {
-			System.out.println(eq);
-			rentStation.addEquipment(eq);
-		}
-	}
-	
-	private static void DOMParser(RentStation rentStation) {
-		EquipmentDOMBuilder domBuilder = new EquipmentDOMBuilder();
-		domBuilder.buildListEquipments(XMLFilePath);
-		List<Equipment> equipments = domBuilder.getEquipments();
-			
-		for (Equipment  eq : equipments) {
-			System.out.println(eq);
-			rentStation.addEquipment(eq);
-		}
-	}
-	
-	private static void StAXParser(RentStation rentStation) {
-		EquipmentStAXBuilder staxBuilder = new EquipmentStAXBuilder();
-		staxBuilder.buildListEquipments(XMLFilePath);
-		List<Equipment> equipments = staxBuilder.getEquipments();
-			
+	private static void startParser(String parserType, RentStation rentStation) {
+		EquipmentBuilderFactory sFactory = new EquipmentBuilderFactory();
+		AbstractEquipmentsBuilder builder = sFactory.createEquipmentBuilder(parserType);
+		builder.buildListEquipments(XMLFilePath);
+		List<Equipment> equipments = builder.getEquipments();
+		
 		for (Equipment  eq : equipments) {
 			System.out.println(eq);
 			rentStation.addEquipment(eq);

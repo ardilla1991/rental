@@ -1,4 +1,4 @@
-package by.htp.rental.parser;
+package by.htp.rental.builder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.Equipment;
 
-public class EquipmentDOMBuilder {
+public class EquipmentDOMBuilder extends AbstractEquipmentsBuilder{
 	private List<Equipment> eq;
 	private DocumentBuilder docBuilder;
 	public EquipmentDOMBuilder() {

@@ -1,4 +1,4 @@
-package by.htp.rental.parser;
+package by.htp.rental.builder;
 
 import by.htp.rental.entity.Equipment;
 import java.io.IOException;
@@ -7,11 +7,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-public class EquipmentSaxBuilder {
+public class EquipmentSAXBuilder extends AbstractEquipmentsBuilder{
 	private List<Equipment> eq;
 	private EquipmentSaxHandler sh;
 	private XMLReader reader;
-	public EquipmentSaxBuilder() {
+	public EquipmentSAXBuilder() {
 		// создание SAX-анализатора
 		sh = new EquipmentSaxHandler();
 		try {
