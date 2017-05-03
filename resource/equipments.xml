@@ -6,35 +6,70 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.example.org/equipmentsSchema equipmentsSchema.xsd"
 >
 	<bycicle>
+		<model>Model b1</model>
 		<price>4.5</price>
 		<weight>7.9</weight>
 		<width>3</width>
 		<height>1</height>
 		<person-category>adult</person-category>
+		<term-of-service>5</term-of-service>
 		<count-speed-mode>20</count-speed-mode>
 	</bycicle>
 	<bycicle>
+		<model>Model b2</model>
 		<price>4.1</price>
 		<weight>7.3</weight>
 		<width>2</width>
 		<height>1.1</height>
 		<person-category>child</person-category>
+		<term-of-service>5</term-of-service>
 		<count-speed-mode>3</count-speed-mode>
 	</bycicle>
 	<skate>
+		<model>Model s1</model>
 		<price>2</price>
 		<weight>0.2</weight>
 		<width>0.45</width>
 		<height>0.15</height>
 		<person-category>child</person-category>
+		<term-of-service>5</term-of-service>
 		<size>36</size>
 	</skate>
 	<skate>
+		<model>Model s1</model>
 		<price>2.3</price>
 		<weight>0.7</weight>
 		<width>0.5</width>
 		<height>0.2</height>
 		<person-category>adult</person-category>
+		<term-of-service>5</term-of-service>
 		<size>39</size>
 	</skate>
+	<helmet>
+		<model>Model h1</model>
+		<price>2</price>
+		<weight>0.2</weight>
+		<width>0.45</width>
+		<height>0.15</height>
+		<person-category>adult</person-category>
+		<categories>
+			<category>Bycicle</category>
+			<category>Skate</category>
+		</categories>
+		<size>2</size>
+		<material>wood</material>
+	</helmet>
+	<helmet>
+		<model>Model h2</model>
+		<price>34</price>
+		<weight>0.23</weight>
+		<width>0.23</width>
+		<height>0.15</height>
+		<person-category>child</person-category>
+		<categories>
+			<category>Bycicle</category>
+		</categories>
+		<size>2</size>
+		<material>wood</material>
+	</helmet>
 </equipments>

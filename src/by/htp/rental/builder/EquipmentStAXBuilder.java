@@ -14,10 +14,18 @@ import javax.xml.stream.XMLStreamReader;
 
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.Equipment;
+import by.htp.rental.entity.PersonCategoryEnum;
 
 public class EquipmentStAXBuilder extends AbstractEquipmentsBuilder{
 	private List<Equipment> eq = new ArrayList<Equipment>();
 	private XMLInputFactory inputFactory;
+	private static ArrayList<String> classesNames = new ArrayList<String>();
+	
+	static {
+		classesNames.add("bycicle");
+		classesNames.add("skate");
+		classesNames.add("helmet");
+	}
 	
 	public EquipmentStAXBuilder() {
 		inputFactory = XMLInputFactory.newInstance();
@@ -39,8 +47,8 @@ public class EquipmentStAXBuilder extends AbstractEquipmentsBuilder{
 				int type = reader.next();
 				if (type == XMLStreamConstants.START_ELEMENT) {
 					name = reader.getLocalName();
-					if (EquipmentTagName.valueOf(name.toUpperCase()) == EquipmentTagName.BYCICLE) {
-						Equipment equipment = buildEquipment(reader);
+					if (classesNames.contains(name)) {
+						Equipment equipment = buildEquipment(name, reader);
 						eq.add(equipment);
 					}
 				}
@@ -60,8 +68,8 @@ public class EquipmentStAXBuilder extends AbstractEquipmentsBuilder{
 		}
 	}
 	
-	private Equipment buildEquipment(XMLStreamReader reader) throws XMLStreamException {
-		Equipment equipment = new Bycicle();
+	private Equipment buildEquipment(String nameOb, XMLStreamReader reader) throws XMLStreamException {
+		Equipment equipment = EquipmentsManager.createEquipment(nameOb);
 
 		String name;
 		EquipmentTagName tagName;
@@ -72,6 +80,10 @@ public class EquipmentStAXBuilder extends AbstractEquipmentsBuilder{
 					name = reader.getLocalName();
 					tagName = EquipmentTagName.valueOf(name.toUpperCase().replace("-", "_"));
 					switch (tagName) {
+						case MODEL:
+							name = getXMLText(reader);
+							equipment.setModel(name);
+							break;
 						case PRICE:
 							name = getXMLText(reader);
 							equipment.setPrice(Double.parseDouble(name));
@@ -88,12 +100,19 @@ public class EquipmentStAXBuilder extends AbstractEquipmentsBuilder{
 							name = getXMLText(reader);
 							equipment.setHeight(Double.parseDouble(name));
 							break;
+						case PERSON_CATEGORY:
+							name = getXMLText(reader);
+							equipment.setPersonCategory(PersonCategoryEnum.valueOf(name.toUpperCase()));
+							break;
+						default:
+							name = getXMLText(reader);
+							EquipmentsManager.setObjectProperties(equipment, tagName, name);								
 					}
 					break;
 				case XMLStreamConstants.END_ELEMENT:
 					name = reader.getLocalName();
 					tagName = EquipmentTagName.valueOf(name.toUpperCase().replace("-", "_"));
-					if (tagName == EquipmentTagName.BYCICLE) {
+					if ( classesNames.contains(name) ) {
 						return equipment;
 					}
 					break;

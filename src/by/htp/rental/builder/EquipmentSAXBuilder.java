@@ -11,8 +11,9 @@ public class EquipmentSAXBuilder extends AbstractEquipmentsBuilder{
 	private List<Equipment> eq;
 	private EquipmentSAXHandler sh;
 	private XMLReader reader;
+	
 	public EquipmentSAXBuilder() {
-		// создание SAX-анализатора
+
 		sh = new EquipmentSAXHandler();
 		try {
 			// создание объекта-обработчика

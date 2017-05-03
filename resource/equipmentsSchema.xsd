@@ -18,6 +18,7 @@ elementFormDefault="qualified">
 	<xs:element name="helmet" type="tns:Helmet" substitutionGroup="tns:accessory"></xs:element>
 	<xs:complexType name="EquipmentType">
 		<xs:sequence>
+			<xs:element name="model" type="xs:string" />
 			<xs:element name="price" type="xs:double" />
 			<xs:element name="weight" type="xs:double" />
 			<xs:element name="width" type="xs:double" />
@@ -38,7 +39,7 @@ elementFormDefault="qualified">
 		<xs:complexContent>
 			<xs:extension base="tns:EquipmentType">
 				<xs:sequence>
-					<xs:element name="category" type="xs:string"/>
+					<xs:element name="categories" type="tns:AccessoryCategory"></xs:element>	
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -70,6 +71,11 @@ elementFormDefault="qualified">
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AccessoryCategory">
+		<xs:sequence>
+			<xs:element name="category" type="xs:string" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="PersonCategory">
 		<xs:restriction base="xs:string">

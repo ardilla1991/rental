@@ -21,4 +21,9 @@ final public class Bycicle extends MainEquipment{
 	public void setCountSpeedMode(int countSpeedMode) {
 		this.countSpeedMode = countSpeedMode;
 	}
+
+	@Override
+	public String toString() {
+		return "Bycicle[" + super.toString() + "countSpeedMode=" + countSpeedMode + "]";
+	}
 }

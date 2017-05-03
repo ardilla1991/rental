@@ -15,6 +15,10 @@ public abstract class Accessory extends Equipment{
 		CATEGORIES.put(2, "Skate");
 	}
 	
+	public Accessory() {
+		
+	}
+	
 	public Accessory(ArrayList<Integer> category, String model, double price, double weight, 
 			double width, double height, PersonCategoryEnum personCategory) {
 		super(model, price, weight, width, height, personCategory);
@@ -39,6 +43,11 @@ public abstract class Accessory extends Equipment{
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + " category=" + category + ", ";
 	}
 
 }

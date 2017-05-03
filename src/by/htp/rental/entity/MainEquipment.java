@@ -3,6 +3,7 @@ package by.htp.rental.entity;
 public abstract class MainEquipment extends Equipment{
 	
 	private int termOfService;
+	
 	public MainEquipment() {
 		super();
 	}
@@ -19,5 +20,10 @@ public abstract class MainEquipment extends Equipment{
 
 	public void setTermOfService(int termOfService) {
 		this.termOfService = termOfService;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "termOfService=" + termOfService + ", ";
 	}
 }

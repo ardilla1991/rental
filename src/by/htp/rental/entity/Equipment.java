@@ -82,8 +82,8 @@ public abstract class Equipment {
 
 	@Override
 	public String toString() {
-		return "Equipment [model=" + model + ", price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
-				+ ", personCategory=" + personCategory + "]\n";
+		return "model=" + model + ", price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
+				+ ", personCategory=" + personCategory + ", ";
 	}
 	
 }

@@ -11,12 +11,21 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.Equipment;
+import by.htp.rental.entity.PersonCategoryEnum;
 import by.htp.rental.entity.Skate;
 
 public class EquipmentSAXHandler extends DefaultHandler{
 	private List<Equipment> eqList = new ArrayList<Equipment>();
 	private Equipment equipment;
 	private EquipmentTagName text;
+	
+	private static ArrayList<String> classesNames = new ArrayList<String>();
+	
+	static {
+		classesNames.add("bycicle");
+		classesNames.add("skate");
+		classesNames.add("helmet");
+	}
 	
 	public List<Equipment> getEquipmentList() {
 		return eqList;
@@ -34,23 +43,21 @@ public class EquipmentSAXHandler extends DefaultHandler{
 			String qName, Attributes attributes) throws SAXException {
 		System.out.println("startElement -> " + "uri: " + uri 
 				+ ", localName: " + localName + ", qName: " + qName);
-		if ("bycicle".equals(localName)) {
-			equipment = new Bycicle();
-		} else if ("skate".equals(localName)) {
-			equipment = new Skate();
+		if (classesNames.contains(localName)) {
+			equipment = EquipmentsManager.createEquipment(localName);
 		} else {
 			text = EquipmentTagName.valueOf(qName.toUpperCase().replace("-", "_"));
 		}
 	}
 	
 	public void characters(char[] buffer, int start, int length) {
-		//text.append(buffer, start, length);
-		System.out.println(text);
-		
+		//text.append(buffer, start, length);		
 		String s = new String(buffer, start, length).trim();
-		System.out.println(s);
-		if ( text != null ) {
+		if ( text != null  && equipment != null) {
 			switch (text) {
+				case MODEL:
+					equipment.setModel(s);
+					break;
 				case PRICE:
 					equipment.setPrice(Double.parseDouble(s));
 					break;
@@ -63,7 +70,11 @@ public class EquipmentSAXHandler extends DefaultHandler{
 				case HEIGHT:
 					equipment.setHeight(Double.parseDouble(s));
 					break;
-				//default:
+				case PERSON_CATEGORY:
+					equipment.setPersonCategory(PersonCategoryEnum.valueOf(s.toUpperCase()));
+					break;
+				default:
+					equipment = EquipmentsManager.setObjectProperties(equipment, text, s);
 					//throw new EnumConstantNotPresentException(
 						//text.getDeclaringClass(), text.name());
 			}
@@ -73,7 +84,7 @@ public class EquipmentSAXHandler extends DefaultHandler{
 	
 	public void endElement(String uri, String localName, String qName) throws SAXException{
 		//EquipmentTagName tagName = EquipmentTagName.valueOf(qName.toUpperCase().replace("-", "_"));
-		if ("skyte".equals(localName) || "bycicle".equals(localName)) {
+		if ( classesNames.contains(localName) ) {
 			eqList.add(equipment);
 			equipment = null;
 		}
