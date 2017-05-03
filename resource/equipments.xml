@@ -10,7 +10,7 @@ xsi:schemaLocation="http://www.example.org/equipmentsSchema equipmentsSchema.xsd
 		<weight>7.9</weight>
 		<width>3</width>
 		<height>1</height>
-		<category>adult</category>
+		<person-category>adult</person-category>
 		<count-speed-mode>20</count-speed-mode>
 	</bycicle>
 	<bycicle>
@@ -18,7 +18,7 @@ xsi:schemaLocation="http://www.example.org/equipmentsSchema equipmentsSchema.xsd
 		<weight>7.3</weight>
 		<width>2</width>
 		<height>1.1</height>
-		<category>child</category>
+		<person-category>child</person-category>
 		<count-speed-mode>3</count-speed-mode>
 	</bycicle>
 	<skate>
@@ -26,7 +26,7 @@ xsi:schemaLocation="http://www.example.org/equipmentsSchema equipmentsSchema.xsd
 		<weight>0.2</weight>
 		<width>0.45</width>
 		<height>0.15</height>
-		<category>child</category>
+		<person-category>child</person-category>
 		<size>36</size>
 	</skate>
 	<skate>
@@ -34,7 +34,7 @@ xsi:schemaLocation="http://www.example.org/equipmentsSchema equipmentsSchema.xsd
 		<weight>0.7</weight>
 		<width>0.5</width>
 		<height>0.2</height>
-		<category>adult</category>
+		<person-category>adult</person-category>
 		<size>39</size>
 	</skate>
 </equipments>

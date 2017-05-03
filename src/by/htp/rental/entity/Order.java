@@ -12,6 +12,7 @@ public class Order {
 	public Order(Person person, Equipment equipment, int rentPeriod) {
 		this.person = person;
 		this.equipment = equipment;
+		
 		this.rentDate = new Date();
 		this.rentPeriod = rentPeriod;
 	}

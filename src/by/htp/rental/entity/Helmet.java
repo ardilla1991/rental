@@ -1,12 +1,14 @@
 package by.htp.rental.entity;
 
+import java.util.ArrayList;
+
 final public class Helmet extends Accessory{
 	
 	private MaterialEnum material;
 	private int size;
 	
-	public Helmet(double price, double weight, double width, double height, CategoryEnum category, MaterialEnum material, int size) {
-		super(price, weight, width, height, category);
+	public Helmet(ArrayList<Integer> category, String model, double price, double weight, double width, double height, PersonCategoryEnum personCategory, MaterialEnum material, int size) {
+		super(category, model, price, weight, width, height, personCategory);
 		this.material = material;
 		this.size = size;
 	}

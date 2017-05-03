@@ -11,20 +11,41 @@ elementFormDefault="qualified">
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="equipment" type="tns:EquipmentType" abstract="true"></xs:element>
-	<xs:element name="bycicle" type="tns:Bycicle" substitutionGroup="tns:equipment"></xs:element>
-	<xs:element name="skate" type="tns:Skate" substitutionGroup="tns:equipment"></xs:element>
+	<xs:element name="mainEquipment" type="tns:MainEquipment" substitutionGroup="tns:equipment"></xs:element>
+	<xs:element name="accessory" type="tns:Accessory" substitutionGroup="tns:equipment"></xs:element>
+	<xs:element name="bycicle" type="tns:Bycicle" substitutionGroup="tns:mainEquipment"></xs:element>
+	<xs:element name="skate" type="tns:Skate" substitutionGroup="tns:mainEquipment"></xs:element>
+	<xs:element name="helmet" type="tns:Helmet" substitutionGroup="tns:accessory"></xs:element>
 	<xs:complexType name="EquipmentType">
 		<xs:sequence>
 			<xs:element name="price" type="xs:double" />
 			<xs:element name="weight" type="xs:double" />
 			<xs:element name="width" type="xs:double" />
 			<xs:element name="height" type="xs:double" />
-			<xs:element name="category" type="tns:Category" />
+			<xs:element name="person-category" type="tns:PersonCategory" />
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MainEquipment">
+		<xs:complexContent>
+			<xs:extension base="tns:EquipmentType">
+				<xs:sequence>
+					<xs:element name="term-of-service" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="Accessory">
+		<xs:complexContent>
+			<xs:extension base="tns:EquipmentType">
+				<xs:sequence>
+					<xs:element name="category" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="Bycicle">
 		<xs:complexContent>
-			<xs:extension base="tns:EquipmentType">
+			<xs:extension base="tns:MainEquipment">
 				<xs:sequence>
 					<xs:element name="count-speed-mode" type="xs:int"/>
 				</xs:sequence>
@@ -33,17 +54,33 @@ elementFormDefault="qualified">
 	</xs:complexType>
 	<xs:complexType name="Skate">
 		<xs:complexContent>
-			<xs:extension base="tns:EquipmentType">
+			<xs:extension base="tns:MainEquipment">
 				<xs:sequence>
 					<xs:element name="size" type="xs:int"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:simpleType name="Category">
+	<xs:complexType name="Helmet">
+		<xs:complexContent>
+			<xs:extension base="tns:Accessory">
+				<xs:sequence>
+					<xs:element name="size" type="xs:int"/>
+					<xs:element name="material" type="tns:Material"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="PersonCategory">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="adult"></xs:enumeration>
 			<xs:enumeration value="child"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Material">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="wood"></xs:enumeration>
+			<xs:enumeration value="plastic"></xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

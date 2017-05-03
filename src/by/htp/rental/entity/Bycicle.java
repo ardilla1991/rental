@@ -8,8 +8,9 @@ final public class Bycicle extends MainEquipment{
 		super();
 	}
 	
-	public Bycicle(double price, double weight, double width, double height, CategoryEnum category, int countSpeedMode) {
-		super(price, weight, width, height, category);
+	public Bycicle(String model, double price, double weight, double width, double height, 
+			PersonCategoryEnum category, int termOfService, int countSpeedMode) {
+		super(model, price, weight, width, height, category, termOfService);
 		this.countSpeedMode = countSpeedMode;
 	}
 

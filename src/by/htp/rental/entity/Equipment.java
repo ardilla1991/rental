@@ -3,22 +3,25 @@ package by.htp.rental.entity;
 public abstract class Equipment {
 	
 	private int id;
+	private String model;
 	private double price;
 	private double weight;
 	private double width;
 	private double height;
-	private CategoryEnum category; // for child or for adult 
+	private PersonCategoryEnum personCategory; // for child or for adult 
 	
 	public Equipment() {
 		
 	}
 	
-	public Equipment(double price, double weight, double width, double height, CategoryEnum category) {
+	public Equipment(String model, double price, double weight, 
+			double width, double height, PersonCategoryEnum personCategory) {
+		this.model = model;
 		this.price = price;
 		this.weight = weight;
 		this.width = width;
 		this.height = height;
-		this.category = category;
+		this.personCategory = personCategory;
 	}
 
 	public int getId() {
@@ -61,10 +64,26 @@ public abstract class Equipment {
 		this.height = height;
 	}
 
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public PersonCategoryEnum getPersonCategory() {
+		return personCategory;
+	}
+
+	public void setPersonCategory(PersonCategoryEnum personCategory) {
+		this.personCategory = personCategory;
+	}
+
 	@Override
 	public String toString() {
-		return "Equipment [price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
-				+ ", category=" + category + "]\n";
+		return "Equipment [model=" + model + ", price=" + price + ", weight=" + weight + ", width=" + width + ", height=" + height
+				+ ", personCategory=" + personCategory + "]\n";
 	}
 	
 }

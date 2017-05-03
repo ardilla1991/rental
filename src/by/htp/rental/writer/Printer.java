@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import by.htp.rental.entity.Equipment;
-import by.htp.rental.entity.RentStation;
+import by.htp.rental.logic.RentStation;
 
 public class Printer {
 

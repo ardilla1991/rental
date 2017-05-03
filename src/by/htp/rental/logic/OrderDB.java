@@ -1,7 +1,10 @@
-package by.htp.rental.entity;
+package by.htp.rental.logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import by.htp.rental.entity.Order;
+import by.htp.rental.entity.Person;
 
 public class OrderDB {
 	

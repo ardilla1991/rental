@@ -13,7 +13,7 @@ import by.htp.rental.entity.Bycicle;
 import by.htp.rental.entity.Equipment;
 import by.htp.rental.entity.Skate;
 
-public class EquipmentSaxHandler extends DefaultHandler{
+public class EquipmentSAXHandler extends DefaultHandler{
 	private List<Equipment> eqList = new ArrayList<Equipment>();
 	private Equipment equipment;
 	private EquipmentTagName text;

@@ -9,11 +9,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class EquipmentSAXBuilder extends AbstractEquipmentsBuilder{
 	private List<Equipment> eq;
-	private EquipmentSaxHandler sh;
+	private EquipmentSAXHandler sh;
 	private XMLReader reader;
 	public EquipmentSAXBuilder() {
 		// создание SAX-анализатора
-		sh = new EquipmentSaxHandler();
+		sh = new EquipmentSAXHandler();
 		try {
 			// создание объекта-обработчика
 			reader = XMLReaderFactory.createXMLReader();
