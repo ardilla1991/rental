@@ -52,8 +52,8 @@ public class RentalRunner {
 		
 		/// accessory
 		ArrayList<Integer> categories = new ArrayList<Integer>();
-		categories.add(Accessory.getCategoryId("Bycicle"));
-		categories.add(Accessory.getCategoryId("Skate"));
+		categories.add(Accessory.getCategoryId("bycicle"));
+		categories.add(Accessory.getCategoryId("skate"));
 		Equipment mainEq4 = new Helmet(categories, "model helmet1", 34, 23, 2, 2, PersonCategoryEnum.ADULT, MaterialEnum.WOOD, 20);
 		Equipment mainEq5 = new Helmet(categories, "model helmet2", 34.6, 23, 2, 2, PersonCategoryEnum.ADULT, MaterialEnum.PLASTIC, 20);
 		Equipment mainEq6 = new Helmet(categories, "model helmet3", 34.3, 23, 2, 2, PersonCategoryEnum.ADULT, MaterialEnum.PLASTIC, 20);
@@ -69,7 +69,7 @@ public class RentalRunner {
 	private void addEquipmentsFromXML(RentStation rentStation) {
 		
 		//isXMLAccordingWithXSD();
-		startParser("sax", rentStation); // "sax", "dom", "stax"
+		startParser("stax", rentStation); // "sax", "dom", "stax"
 	}
 	
 	private void startParser(String parserType, RentStation rentStation) {

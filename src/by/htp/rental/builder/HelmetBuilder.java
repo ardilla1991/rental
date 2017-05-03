@@ -14,7 +14,7 @@ public class HelmetBuilder {
 				ArrayList<Integer> categories = equipment.getCategory();
 				int categoryId = Accessory.getCategoryId(s);
 				if ( categoryId > 0 ) {
-					categories.add(Accessory.getCategoryId(s));
+					categories.add(new Integer(categoryId));
 					equipment.setCategory(categories);
 				}
 				break;

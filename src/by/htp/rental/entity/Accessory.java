@@ -8,11 +8,11 @@ import java.util.Set;
 public abstract class Accessory extends Equipment{
 
 	private static final HashMap<Integer, String> CATEGORIES = new HashMap<Integer, String>(2);
-	private ArrayList<Integer> category;
+	private ArrayList<Integer> category = new ArrayList<Integer>();
 	
 	static {
-		CATEGORIES.put(1, "Bycicle");
-		CATEGORIES.put(2, "Skate");
+		CATEGORIES.put(1, "bycicle");
+		CATEGORIES.put(2, "skate");
 	}
 	
 	public Accessory() {
@@ -35,9 +35,8 @@ public abstract class Accessory extends Equipment{
 	
 	public static int getCategoryId(String category) {
 		Set<Map.Entry<Integer,String>> entrySet = CATEGORIES.entrySet();
-		Object desiredObject = new Object();
 		for (Map.Entry<Integer,String> pair : entrySet) {
-		    if (desiredObject.equals(pair.getValue())) {
+		    if (category.toLowerCase().equals(pair.getValue())) {
 		        return pair.getKey();
 		    }
 		}
