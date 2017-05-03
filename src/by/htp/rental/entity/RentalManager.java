@@ -15,15 +15,14 @@ public class RentalManager {
 	}
 	
 	public boolean rent(Order order) {
-		resetEquipments();
-		if ( isSpareEquipment(order) && !isExceededNumberOfEquipmentForUser(order.getPerson()) ){
-			// add order to person
-			orderDB.addOrder(order);
-			rentStation.addEngagedRecord(order.getEquipment());
-			rentStation.deleteSpareRecord(order.getEquipment());
-			return true;
-		}
-		return false;
+		if ( isExceededNumberOfEquipmentForUser(order.getPerson()) )
+				return false;
+
+		orderDB.addOrder(order); // add order to person
+		rentStation.addEngagedRecord(order.getEquipment());
+		rentStation.deleteSpareRecord(order.getEquipment());
+		
+		return true;
 	}
 	
 	private boolean isExceededNumberOfEquipmentForUser(Person person) {
@@ -32,14 +31,6 @@ public class RentalManager {
 		}
 		
 		return false;
-	}
-	
-	private boolean isSpareEquipment(Order order){
-		boolean isset = false;
-		System.out.println((rentStation.getSpareEquipments()).get(order.getEquipment().getId()));
-		isset = (rentStation.getSpareEquipments()).get(order.getEquipment().getId()) != null ? true : false; 
-		
-		return isset;
 	}
 	
 	public void resetEquipments() {

@@ -3,6 +3,50 @@ package by.htp.rental.entity;
 import java.util.Date;
 
 public class Order {
+
+	private Person person;
+	private Equipment equipment;
+	private Date rentDate;
+	private int rentPeriod;
+
+	public Order(Person person, Equipment equipment, int rentPeriod) {
+		this.person = person;
+		this.equipment = equipment;
+		this.rentDate = new Date();
+		this.rentPeriod = rentPeriod;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public Equipment getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
+	}
+	
+	public Date getRentDate() {
+		return rentDate;
+	}
+
+	public void setRentDate(Date rentDate) {
+		this.rentDate = rentDate;
+	}
+	
+	public int getRentPeriod() {
+		return rentPeriod;
+	}
+
+	public void setRentPeriod(int rentPeriod) {
+		this.rentPeriod = rentPeriod;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -43,53 +87,4 @@ public class Order {
 			return false;
 		return true;
 	}
-
-	private Person person;
-	private Equipment equipment;
-	private Date rentDate;
-	private int rentPeriod;
-
-	public Order() {
-		
-	}
-
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	public Equipment getEquipment() {
-		return equipment;
-	}
-
-	public void setEquipment(Equipment equipment) {
-		this.equipment = equipment;
-	}
-	
-	public void createOrder(Person person, Equipment equipment, int rentPeriod) {
-		this.person = person;
-		this.equipment = equipment;
-		this.rentDate = new Date();
-		this.rentPeriod = rentPeriod;
-	}
-	
-	public Date getRentDate() {
-		return rentDate;
-	}
-
-	public void setRentDate(Date rentDate) {
-		this.rentDate = rentDate;
-	}
-	
-	public int getRentPeriod() {
-		return rentPeriod;
-	}
-
-	public void setRentPeriod(int rentPeriod) {
-		this.rentPeriod = rentPeriod;
-	}
-
 }

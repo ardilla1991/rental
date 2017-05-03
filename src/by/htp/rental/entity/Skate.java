@@ -8,7 +8,7 @@ final public class Skate extends MainEquipment{
 		
 	}
 	
-	public Skate(double price, double weight, double width, double heigh, CategoryEq category, int size) {
+	public Skate(double price, double weight, double width, double heigh, CategoryEnum category, int size) {
 		super(price, weight, width, heigh, category);
 		this.size = size;
 	}

@@ -8,7 +8,7 @@ final public class Bycicle extends MainEquipment{
 		super();
 	}
 	
-	public Bycicle(double price, double weight, double width, double height, CategoryEq category, int countSpeedMode) {
+	public Bycicle(double price, double weight, double width, double height, CategoryEnum category, int countSpeedMode) {
 		super(price, weight, width, height, category);
 		this.countSpeedMode = countSpeedMode;
 	}

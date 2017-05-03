@@ -3,7 +3,6 @@ package by.htp.rental.launch;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.XMLConstants;
@@ -18,14 +17,11 @@ import org.xml.sax.SAXException;
 
 import by.htp.rental.builder.AbstractEquipmentsBuilder;
 import by.htp.rental.builder.EquipmentBuilderFactory;
-import by.htp.rental.builder.EquipmentDOMBuilder;
-import by.htp.rental.builder.EquipmentSAXBuilder;
-import by.htp.rental.builder.EquipmentStAXBuilder;
 import by.htp.rental.entity.Bycicle;
-import by.htp.rental.entity.CategoryEq;
+import by.htp.rental.entity.CategoryEnum;
 import by.htp.rental.entity.Equipment;
 import by.htp.rental.entity.Helmet;
-import by.htp.rental.entity.MaterialType;
+import by.htp.rental.entity.MaterialEnum;
 import by.htp.rental.entity.Order;
 import by.htp.rental.entity.OrderDB;
 import by.htp.rental.entity.Person;
@@ -47,14 +43,14 @@ public class MainRental {
 	}
 	
 	private static void addEquipments(RentStation rentStation) {
-		Equipment mainEq1 = new Bycicle(10.4, 1, 7, 0.7, CategoryEq.ADULT, 5);
-		Equipment mainEq2 = new Bycicle(5.4, 1, 10, 1, CategoryEq.CHILD, 5);
-		Equipment mainEq3 = new Skate(10, 3, 2, 1, CategoryEq.ADULT, 2);
+		Equipment mainEq1 = new Bycicle(10.4, 1, 7, 0.7, CategoryEnum.ADULT, 5);
+		Equipment mainEq2 = new Bycicle(5.4, 1, 10, 1, CategoryEnum.CHILD, 5);
+		Equipment mainEq3 = new Skate(10, 3, 2, 1, CategoryEnum.ADULT, 2);
 		
 		/// accessory
-		Equipment mainEq4 = new Helmet(34, 23, 2, 2, CategoryEq.ADULT, MaterialType.WOOD, 20);
-		Equipment mainEq5 = new Helmet(34.6, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
-		Equipment mainEq6 = new Helmet(34.3, 23, 2, 2, CategoryEq.ADULT, MaterialType.PLASTIC, 20);
+		Equipment mainEq4 = new Helmet(34, 23, 2, 2, CategoryEnum.ADULT, MaterialEnum.WOOD, 20);
+		Equipment mainEq5 = new Helmet(34.6, 23, 2, 2, CategoryEnum.ADULT, MaterialEnum.PLASTIC, 20);
+		Equipment mainEq6 = new Helmet(34.3, 23, 2, 2, CategoryEnum.ADULT, MaterialEnum.PLASTIC, 20);
 		
 		rentStation.addEquipment(mainEq1);
 		rentStation.addEquipment(mainEq3);
@@ -113,12 +109,8 @@ public class MainRental {
 		Printer print = new Printer();
 		
 		print.printRes("All Equipments", rentStation);
-
-		HashMap<Integer, Equipment> eqSpare = rentStation.getSpareEquipments();
-		print.printRes("All spare equipments:", eqSpare);
-		
-		HashMap<Integer, Equipment> eqEngaged = rentStation.getEngagedEquipments();
-		print.printRes("All engaged equipments:", eqEngaged);
+		print.printRes("All spare equipments:", rentStation.getSpareEquipments());
+		print.printRes("All engaged equipments:", rentStation.getEngagedEquipments());
 		
 		Person person1 = new Person("Ivan", "Ivanov", "12345678");
 		
@@ -127,16 +119,13 @@ public class MainRental {
 		
 		//  Create order for person //
 		System.out.println("Create order");
-		Order order1 = new Order();
+		rentalManager.resetEquipments();
 		Equipment equipmentForRent = rentStation.findSpareEquipmentByType("Bycicle");
 		if ( equipmentForRent != null ) {
-			order1.createOrder(person1, equipmentForRent, 24);
+			Order order1 = new Order(person1, equipmentForRent, 24);
 			boolean resRent1 = rentalManager.rent(order1);
-			if ( resRent1 ) {
-				print.printRes("Equipment was added");
-			} else {
-				print.printRes("Equipment wasn't added");
-			}
+			String printInf = ( resRent1 ? "Equipment was added" : "Equipment wasn't added" );
+			print.printRes(printInf);
 		}
 		
 		print.printRes("spare=", rentStation.getSpareEquipments());
@@ -144,16 +133,13 @@ public class MainRental {
 		System.out.print(orderDB.getUnits());
 		
 		////////////////////////////////
-		Order order2 = new Order();
+		rentalManager.resetEquipments();
 		Equipment equipmentForRent2 = rentStation.findSpareEquipmentByType("Bycicle");
 		if ( equipmentForRent2 != null ) {
-			order2.createOrder(person1, equipmentForRent2, 12);
+			Order order2 = new Order(person1, equipmentForRent2, 12);
 			boolean resRent2 = rentalManager.rent(order2);
-			if ( resRent2 ) {
-				print.printRes("Equipment was added");
-			} else {
-				print.printRes("Equipment wasn't added");
-			}
+			String printInf = ( resRent2 ? "Equipment was added" : "Equipment wasn't added" );
+			print.printRes(printInf);
 		}
 		
 		print.printRes("spare=", rentStation.getSpareEquipments());

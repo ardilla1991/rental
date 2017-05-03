@@ -6,7 +6,7 @@ public abstract class MainEquipment extends Equipment{
 		super();
 	}
 	
-	public MainEquipment(double price, double weight, double width, double height, CategoryEq category) {
+	public MainEquipment(double price, double weight, double width, double height, CategoryEnum category) {
 		super(price, weight, width, height, category);
 	}
 }

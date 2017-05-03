@@ -34,7 +34,6 @@ public class OrderDB {
 	@Override
 	public String toString() {
 		String str = "";
-		//return "OrderDB [units=" + units + "]";
 		for (ArrayList<Order> value : units.values() ){
 			for (int i=0; i<value.size(); i++){
 				str += "Value: " + value.get(i);

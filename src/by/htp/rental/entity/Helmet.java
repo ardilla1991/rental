@@ -2,10 +2,10 @@ package by.htp.rental.entity;
 
 final public class Helmet extends Accessory{
 	
-	private MaterialType material;
+	private MaterialEnum material;
 	private int size;
 	
-	public Helmet(double price, double weight, double width, double height, CategoryEq category, MaterialType material, int size) {
+	public Helmet(double price, double weight, double width, double height, CategoryEnum category, MaterialEnum material, int size) {
 		super(price, weight, width, height, category);
 		this.material = material;
 		this.size = size;

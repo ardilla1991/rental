@@ -1,6 +1,6 @@
 package by.htp.rental.entity;
 
-public enum MaterialType {
+public enum MaterialEnum {
 	WOOD,
 	PLASTIC
 }

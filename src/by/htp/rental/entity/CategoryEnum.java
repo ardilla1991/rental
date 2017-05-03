@@ -1,6 +1,6 @@
 package by.htp.rental.entity;
 
-public enum CategoryEq
+public enum CategoryEnum
 {
     ADULT,
     CHILD
